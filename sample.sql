@@ -1,5 +1,28 @@
 USE geek_skills;
 
+-- -------------------------------------------------------------
+
+-- HELPER FUNCTION FOR READABILITY SOURCE ONLY
+-- ===========================================
+
+DROP FUNCTION IF EXISTS l;
+CREATE FUNCTION l (lang varchar(64)) RETURNS int(11)
+    RETURN (SELECT id FROM languages WHERE name=lang);
+
+DROP FUNCTION IF EXISTS f;
+CREATE FUNCTION f (frame varchar(64)) RETURNS int(11)
+    RETURN (SELECT id FROM frameworks WHERE name=frame);
+
+DROP FUNCTION IF EXISTS s;
+CREATE FUNCTION s (skill varchar(64)) RETURNS int(11)
+    RETURN (SELECT id FROM skills WHERE name LIKE CONCAT('%', skill, '%'));
+
+DROP FUNCTION IF EXISTS a;
+CREATE FUNCTION a (ac varchar(64)) RETURNS int(11)
+    RETURN (SELECT id FROM achievements WHERE name LIKE CONCAT('%', ac, '%'));
+
+-- -------------------------------------------------------------
+
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
     id int(11) NOT NULL AUTO_INCREMENT,
@@ -81,15 +104,15 @@ CREATE TABLE frameworks (
 );
 
 INSERT INTO frameworks VALUES
-    (1, 'django',       6),
-    (2, 'rails',        7),
-    (3, 'grals',        2),
-    (4, 'drupal',       5),
-    (5, 'laravel',      5),
-    (6, 'codeigniter',  5),
-    (7, 'jquery',      11),
-    (8, 'phonegap',    13),
-    (9, 'corona',       8);
+    (1, 'django',      l('python')),
+    (2, 'rails',       l('ruby')),
+    (3, 'grals',       l('java')),
+    (4, 'drupal',      l('php')),
+    (5, 'laravel',     l('php')),
+    (6, 'codeigniter', l('php')),
+    (7, 'jquery',      l('javascript')),
+    (8, 'phonegap',    l('html')),
+    (9, 'corona',      l('lua'));
 
 -- -------------------------------------------------------------
 
@@ -138,20 +161,20 @@ CREATE TABLE skill_requirement (
 );
 
 INSERT INTO skill_requirement VALUES
-    ( 2,  1),
-    ( 3,  1),
-    ( 4,  3),
-    ( 5,  3),
-    ( 7,  1),
-    ( 8,  1),
-    ( 8,  5),
-    ( 9,  1),
-    (10,  9),
-    (10,  6),
-    (11,  2),
-    (11,  9),
-    (12, 11),
-    (13, 11);
+    (s('oop'),        s('basic')),
+    (s('functional'), s('basic')),
+    (s('logic'),      s('functional')),
+    (s('concurrent'), s('functional')),
+    (s('security'),   s('basic')),
+    (s('file'),       s('basic')),
+    (s('file'),       s('concurrent')),
+    (s('database'),   s('basic')),
+    (s('mining'),     s('database')),
+    (s('mining'),     s('regular ex')),
+    (s('model'),      s('oop')),
+    (s('model'),      s('database')),
+    (s('mobile'),     s('model')),
+    (s('web'),        s('model'));
 
 -- -------------------------------------------------------------
 
@@ -163,17 +186,17 @@ CREATE TABLE framework_requirement (
 );
 
 INSERT INTO framework_requirement VALUES
-    (1, 13),
-    (2, 13),
-    (3, 13),
-    (4, 13),
-    (4,  7),
-    (5, 13),
-    (6, 13),
-    (7,  3),
-    (8, 12),
-    (8, 13),
-    (9, 12);
+    (f('django'),      s('web')),
+    (f('rails'),       s('web')),
+    (f('grals'),       s('web')),
+    (f('drupal'),      s('web')),
+    (f('drupal'),      s('security')),
+    (f('laravel'),     s('web')),
+    (f('codeigniter'), s('web')),
+    (f('jquery'),      s('functional')),
+    (f('phonegap'),    s('mobile')),
+    (f('phonegap'),    s('web')),
+    (f('corona'),      s('mobile'));
 
 -- -------------------------------------------------------------
 
@@ -197,44 +220,44 @@ DELIMITER !
 CREATE TRIGGER skill_achievement AFTER INSERT ON user_skill
     FOR EACH ROW BEGIN
         CASE NEW.sid
-            WHEN 2 THEN -- oop
-                INSERT INTO user_achievement VALUES (NEW.uid, 6);
-            WHEN 3 THEN -- fun
-                INSERT INTO user_achievement VALUES (NEW.uid, 7);
-            WHEN 10 THEN -- mining
-                INSERT INTO user_achievement VALUES (NEW.uid, 8);
-            WHEN 12 THEN -- mobile
-                INSERT INTO user_achievement VALUES (NEW.uid, 10);
-            WHEN 13 THEN -- web
-                INSERT INTO user_achievement VALUES (NEW.uid, 9);
+            WHEN s('oop') THEN
+                INSERT INTO user_achievement VALUES (NEW.uid, a('class'));
+            WHEN s('functional') THEN
+                INSERT INTO user_achievement VALUES (NEW.uid, a('functional'));
+            WHEN s('mining') THEN
+                INSERT INTO user_achievement VALUES (NEW.uid, a('pickaxe'));
+            WHEN s('mobile') THEN
+                INSERT INTO user_achievement VALUES (NEW.uid, a('everywhere'));
+            WHEN s('web') THEN
+                INSERT INTO user_achievement VALUES (NEW.uid, a('spider'));
             ELSE BEGIN END;
         END CASE;
     END!
 DELIMITER ;
 
 INSERT INTO user_skill VALUES
-    (1,  1),
-    (1,  3),
-    (2,  1),
-    (2,  9),
-    (3,  6),
-    (4,  1),
-    (4,  2),
-    (5,  1),
-    (5,  2),
-    (5,  9),
-    (5, 11),
-    (5, 12),
-    (6,  1),
-    (6,  2),
-    (6,  9),
-    (6, 11),
-    (6, 13),
-    (8,  1),
-    (8,  4),
-    (8,  5),
-    (8,  9),
-    (8, 10);
+    (1, s('basic')),
+    (1, s('functional')),
+    (2, s('basic')),
+    (2, s('database')),
+    (3, s('regular ex')),
+    (4, s('basic')),
+    (4, s('oop')),
+    (5, s('basic')),
+    (5, s('oop')),
+    (5, s('database')),
+    (5, s('model')),
+    (5, s('mobile')),
+    (6, s('basic')),
+    (6, s('oop')),
+    (6, s('database')),
+    (6, s('model')),
+    (6, s('web')),
+    (8, s('basic')),
+    (8, s('logic')),
+    (8, s('concurrent')),
+    (8, s('database')),
+    (8, s('mining'));
 
 -- -------------------------------------------------------------
 
@@ -252,43 +275,43 @@ CREATE TRIGGER language_achievement AFTER INSERT ON user_language
             WHEN 1 THEN
                 INSERT INTO user_achievement VALUES (NEW.uid, 1);
             WHEN 2 THEN
-                INSERT INTO user_achievement VALUES (NEW.uid, 2);
+                INSERT INTO user_achievement VALUES (NEW.uid, a('++'));
             WHEN 5 THEN
-                INSERT INTO user_achievement VALUES (NEW.uid, 3);
+                INSERT INTO user_achievement VALUES (NEW.uid, a('101'));
             ELSE BEGIN END;
         END CASE;
 
         CASE NEW.lid
-            WHEN 6 THEN -- python
-                INSERT INTO user_achievement VALUES (NEW.uid, 11);
-            WHEN 7 THEN -- ruby
-                INSERT INTO user_achievement VALUES (NEW.uid, 11);
-            WHEN 11 THEN -- javascript
-                INSERT INTO user_achievement VALUES (NEW.uid, 12);
-            WHEN 14 THEN -- brainfuck
-                INSERT INTO user_achievement VALUES (NEW.uid, 13);
+            WHEN l('python') THEN
+                INSERT INTO user_achievement VALUES (NEW.uid, a('psuedocode'));
+            WHEN l('ruby') THEN
+                INSERT INTO user_achievement VALUES (NEW.uid, a('psuedocode'));
+            WHEN l('javascript') THEN
+                INSERT INTO user_achievement VALUES (NEW.uid, a('this'));
+            WHEN l('brainfuck') THEN
+                INSERT INTO user_achievement VALUES (NEW.uid, a('!@#$%'));
             ELSE BEGIN END;
         END CASE;
     END!
 DELIMITER ;
 
 INSERT INTO user_language VALUES
-    (1,  9),
-    (2,  2),
-    (3,  1),
-    (3,  4),
-    (4,  2),
-    (5,  2),
-    (5,  3),
-    (5,  8),
-    (6,  4),
-    (6,  5),
-    (6, 11),
-    (6, 12),
-    (6, 13),
-    (7, 14),
-    (8,  4),
-    (8,  5);
+    (1, l('haskell')),
+    (2, l('java')),
+    (3, l('c')),
+    (3, l('bash')),
+    (4, l('java')),
+    (5, l('java')),
+    (5, l('objective-c')),
+    (5, l('lua')),
+    (6, l('bash')),
+    (6, l('php')),
+    (6, l('javascript')),
+    (6, l('css')),
+    (6, l('html')),
+    (7, l('brainfuck')),
+    (8, l('bash')),
+    (8, l('php'));
 
 -- -------------------------------------------------------------
 
@@ -304,15 +327,15 @@ CREATE TRIGGER framework_achievement AFTER INSERT ON user_framework
     FOR EACH ROW BEGIN
         CASE (SELECT count(*) FROM user_framework uf WHERE uf.uid=NEW.uid)
             WHEN 1 THEN
-                INSERT INTO user_achievement VALUES (NEW.uid, 4);
+                INSERT INTO user_achievement VALUES (NEW.uid, a('frame'));
             WHEN 4 THEN
-                INSERT INTO user_achievement VALUES (NEW.uid, 5);
+                INSERT INTO user_achievement VALUES (NEW.uid, a('window'));
             ELSE BEGIN END;
         END CASE;
     END!
 DELIMITER ;
 
 INSERT INTO user_framework VALUES
-    (5, 9),
-    (6, 5),
-    (6, 7);
+    (5, f('corona')),
+    (6, f('laravel')),
+    (6, f('jquery'));
