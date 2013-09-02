@@ -57,6 +57,7 @@ INSERT INTO skills VALUES
     (NULL, 'functional programming'),
     (NULL, 'logic programming'),
     (NULL, 'concurrent programming'),
+    (NULL, 'system programming'),
     (NULL, 'regular expression'),
     (NULL, 'network security'),
     (NULL, 'file base'),
@@ -82,8 +83,10 @@ INSERT INTO languages VALUES
     (NULL, 'objective-c'),
     (NULL, 'bash'),
     (NULL, 'php'),
+    (NULL, 'perl'),
     (NULL, 'python'),
     (NULL, 'ruby'),
+    (NULL, 'lisp'),
     (NULL, 'lua'),
     (NULL, 'haskell'),
     (NULL, 'erlang'),
@@ -136,7 +139,9 @@ INSERT INTO achievements VALUES
     (NULL, 'pickaxe and shovel',     'know data mining.'),
     (NULL, 'spider geek',            'know web application.'),
     (NULL, 'geeks everywhere',       'know mobile application.'),
-    (NULL, 'psuedocoder',            'know python or ruby.'),
+    (NULL, 'psuedocoder',            'know python.'),
+    (NULL, 'happy coding',           'know ruby.'),
+    (NULL, 'tim toady bicarbonate',  'know perl.'),
     (NULL, 'who is this',            'know javascript.'),
     (NULL, '!@#$%',                  'know brainfuck.');
 
@@ -164,9 +169,10 @@ INSERT INTO skill_requirement VALUES
     (s('oop'),        s('basic')),
     (s('functional'), s('basic')),
     (s('logic'),      s('functional')),
-    (s('concurrent'), s('functional')),
-    (s('security'),   s('basic')),
-    (s('file'),       s('basic')),
+    (s('concurrent'), s('basic')),
+    (s('system'),     s('file')),
+    (s('system'),     s('regular ex')),
+    (s('security'),   s('system')),
     (s('file'),       s('concurrent')),
     (s('database'),   s('basic')),
     (s('mining'),     s('database')),
@@ -285,7 +291,9 @@ CREATE TRIGGER language_achievement AFTER INSERT ON user_language
             WHEN l('python') THEN
                 INSERT INTO user_achievement VALUES (NEW.uid, a('psuedocode'));
             WHEN l('ruby') THEN
-                INSERT INTO user_achievement VALUES (NEW.uid, a('psuedocode'));
+                INSERT INTO user_achievement VALUES (NEW.uid, a('happy'));
+            WHEN l('perl') THEN
+                INSERT INTO user_achievement VALUES (NEW.uid, a('tim toady'));
             WHEN l('javascript') THEN
                 INSERT INTO user_achievement VALUES (NEW.uid, a('this'));
             WHEN l('brainfuck') THEN
