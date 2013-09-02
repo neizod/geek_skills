@@ -193,6 +193,25 @@ CREATE TABLE user_skill (
     PRIMARY KEY (uid, sid)
 );
 
+DELIMITER !
+CREATE TRIGGER skill_achievement AFTER INSERT ON user_skill
+    FOR EACH ROW BEGIN
+        CASE NEW.sid
+            WHEN 2 THEN -- oop
+                INSERT INTO user_achievement VALUES (NEW.uid, 6);
+            WHEN 3 THEN -- fun
+                INSERT INTO user_achievement VALUES (NEW.uid, 7);
+            WHEN 10 THEN -- mining
+                INSERT INTO user_achievement VALUES (NEW.uid, 8);
+            WHEN 12 THEN -- mobile
+                INSERT INTO user_achievement VALUES (NEW.uid, 10);
+            WHEN 13 THEN -- web
+                INSERT INTO user_achievement VALUES (NEW.uid, 9);
+            ELSE BEGIN END;
+        END CASE;
+    END!
+DELIMITER ;
+
 INSERT INTO user_skill VALUES
     (1,  1),
     (1,  3),
@@ -226,6 +245,33 @@ CREATE TABLE user_language (
     PRIMARY KEY (uid, lid)
 );
 
+DELIMITER !
+CREATE TRIGGER language_achievement AFTER INSERT ON user_language
+    FOR EACH ROW BEGIN
+        CASE (SELECT count(*) FROM user_language ul WHERE ul.uid=NEW.uid)
+            WHEN 1 THEN
+                INSERT INTO user_achievement VALUES (NEW.uid, 1);
+            WHEN 2 THEN
+                INSERT INTO user_achievement VALUES (NEW.uid, 2);
+            WHEN 5 THEN
+                INSERT INTO user_achievement VALUES (NEW.uid, 3);
+            ELSE BEGIN END;
+        END CASE;
+
+        CASE NEW.lid
+            WHEN 6 THEN -- python
+                INSERT INTO user_achievement VALUES (NEW.uid, 11);
+            WHEN 7 THEN -- ruby
+                INSERT INTO user_achievement VALUES (NEW.uid, 11);
+            WHEN 11 THEN -- javascript
+                INSERT INTO user_achievement VALUES (NEW.uid, 12);
+            WHEN 14 THEN -- brainfuck
+                INSERT INTO user_achievement VALUES (NEW.uid, 13);
+            ELSE BEGIN END;
+        END CASE;
+    END!
+DELIMITER ;
+
 INSERT INTO user_language VALUES
     (1,  9),
     (2,  2),
@@ -252,6 +298,19 @@ CREATE TABLE user_framework (
     fid int(11) NOT NULL,
     PRIMARY KEY (uid, fid)
 );
+
+DELIMITER !
+CREATE TRIGGER framework_achievement AFTER INSERT ON user_framework
+    FOR EACH ROW BEGIN
+        CASE (SELECT count(*) FROM user_framework uf WHERE uf.uid=NEW.uid)
+            WHEN 1 THEN
+                INSERT INTO user_achievement VALUES (NEW.uid, 4);
+            WHEN 4 THEN
+                INSERT INTO user_achievement VALUES (NEW.uid, 5);
+            ELSE BEGIN END;
+        END CASE;
+    END!
+DELIMITER ;
 
 INSERT INTO user_framework VALUES
     (5, 9),
