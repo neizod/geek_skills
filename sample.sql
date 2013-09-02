@@ -9,14 +9,14 @@ CREATE TABLE users (
 );
 
 INSERT INTO users VALUES
-    (NULL, 'foo'),
-    (NULL, 'bar'),
-    (NULL, 'spam'),
-    (NULL, 'eggs'),
-    (NULL, 'hannah'),
-    (NULL, 'tester'),
-    (NULL, 'uzer'),
-    (NULL, 'xyzzy');
+    (1, 'foo'),
+    (2, 'bar'),
+    (3, 'spam'),
+    (4, 'eggs'),
+    (5, 'hannah'),
+    (6, 'tester'),
+    (7, 'uzer'),
+    (8, 'xyzzy');
 
 -- -------------------------------------------------------------
 
@@ -29,19 +29,19 @@ CREATE TABLE skills (
 );
 
 INSERT INTO skills VALUES
-    (NULL, 'basic programming'),
-    (NULL, 'oop programming'),
-    (NULL, 'functional programming'),
-    (NULL, 'logic programming'),
-    (NULL, 'concurrent programming'),
-    (NULL, 'regular expression'),
-    (NULL, 'network security'),
-    (NULL, 'file base'),
-    (NULL, 'database'),
-    (NULL, 'data mining'),
-    (NULL, 'model view controller'),
-    (NULL, 'mobile application'),
-    (NULL, 'web application');
+    ( 1, 'basic programming'),
+    ( 2, 'oop programming'),
+    ( 3, 'functional programming'),
+    ( 4, 'logic programming'),
+    ( 5, 'concurrent programming'),
+    ( 6, 'regular expression'),
+    ( 7, 'network security'),
+    ( 8, 'file base'),
+    ( 9, 'database'),
+    (10, 'data mining'),
+    (11, 'model view controller'),
+    (12, 'mobile application'),
+    (13, 'web application');
 
 -- -------------------------------------------------------------
 
@@ -54,20 +54,20 @@ CREATE TABLE languages (
 );
 
 INSERT INTO languages VALUES
-    (NULL, 'c'),
-    (NULL, 'java'),
-    (NULL, 'objective-c'),
-    (NULL, 'bash'),
-    (NULL, 'php'),
-    (NULL, 'python'),
-    (NULL, 'ruby'),
-    (NULL, 'lua'),
-    (NULL, 'haskell'),
-    (NULL, 'erlang'),
-    (NULL, 'javascript'),
-    (NULL, 'css'),
-    (NULL, 'html'),
-    (NULL, 'brainfuck');
+    ( 1, 'c'),
+    ( 2, 'java'),
+    ( 3, 'objective-c'),
+    ( 4, 'bash'),
+    ( 5, 'php'),
+    ( 6, 'python'),
+    ( 7, 'ruby'),
+    ( 8, 'lua'),
+    ( 9, 'haskell'),
+    (10, 'erlang'),
+    (11, 'javascript'),
+    (12, 'css'),
+    (13, 'html'),
+    (14, 'brainfuck');
 
 -- -------------------------------------------------------------
 
@@ -75,22 +75,21 @@ DROP TABLE IF EXISTS frameworks;
 CREATE TABLE frameworks (
     id int(11) NOT NULL AUTO_INCREMENT,
     name varchar(64) NOT NULL,
---  lang_id int(11) NOT NULL,         -- use this in real work,
-    lang_name varchar(64) NOT NULL,   -- this line is for readable mockup.
+    lid int(11) NOT NULL,
     PRIMARY KEY (id),
     UNIQUE KEY (name)
 );
 
 INSERT INTO frameworks VALUES
-    (NULL, 'django',      'python'),
-    (NULL, 'rails',       'ruby'),
-    (NULL, 'grals',       'java'),
-    (NULL, 'drupal',      'php'),
-    (NULL, 'laravel',     'php'),
-    (NULL, 'codeigniter', 'php'),
-    (NULL, 'jquery',      'javascript'),
-    (NULL, 'phonegap',    'html'),
-    (NULL, 'corona',      'lua');
+    (1, 'django',       6),
+    (2, 'rails',        7),
+    (3, 'grals',        2),
+    (4, 'drupal',       5),
+    (5, 'laravel',      5),
+    (6, 'codeigniter',  5),
+    (7, 'jquery',      11),
+    (8, 'phonegap',    13),
+    (9, 'corona',       8);
 
 -- -------------------------------------------------------------
 
@@ -104,16 +103,16 @@ CREATE TABLE achievements (
 );
 
 INSERT INTO achievements VALUES
-    (NULL, 'beginner',               'know a language.'),
-    (NULL, 'beginner++',             'know 2 languages.'),
-    (NULL, 'beginner 101',           'know 5 languages.'),
-    (NULL, 'work with a frame',      'know a framework'),
-    (NULL, 'looking through window', 'know 4 framework'),
-    (NULL, 'programming with class', 'know oop programming.'),
-    (NULL, 'finally functional',     'know functional programming.'),
-    (NULL, 'pickaxe and shovel',     'know data mining.'),
-    (NULL, 'spider geek',            'know web application.'),
-    (NULL, 'geeks everywhere',       'know mobile application.'),
-    (NULL, 'psuedocoder',            'know python or ruby.'),
-    (NULL, 'who is this',            'know javascript.'),
-    (NULL, '!@#$%^&*()_+',           'know brainfuck.');
+    ( 1, 'beginner',               'know a language.'),
+    ( 2, 'beginner++',             'know 2 languages.'),
+    ( 3, 'beginner 101',           'know 5 languages.'),
+    ( 4, 'work with a frame',      'know a framework'),
+    ( 5, 'looking through window', 'know 4 framework'),
+    ( 6, 'programming with class', 'know oop programming.'),
+    ( 7, 'finally functional',     'know functional programming.'),
+    ( 8, 'pickaxe and shovel',     'know data mining.'),
+    ( 9, 'spider geek',            'know web application.'),
+    (10, 'geeks everywhere',       'know mobile application.'),
+    (11, 'psuedocoder',            'know python or ruby.'),
+    (12, 'who is this',            'know javascript.'),
+    (13, '!@#$%',                  'know brainfuck.');
