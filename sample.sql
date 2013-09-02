@@ -116,3 +116,144 @@ INSERT INTO achievements VALUES
     (11, 'psuedocoder',            'know python or ruby.'),
     (12, 'who is this',            'know javascript.'),
     (13, '!@#$%',                  'know brainfuck.');
+
+-- -------------------------------------------------------------
+
+-- RELATION TABLES
+-- ===============
+-- skill_requirement
+-- framework_requirement
+-- user_achievement  --> trigger-base
+-- user_skill
+-- user_language
+-- user_framework
+
+-- -------------------------------------------------------------
+
+DROP TABLE IF EXISTS skill_requirement;
+CREATE TABLE skill_requirement (
+    request_sid int(11) NOT NULL,
+    require_sid int(11) NOT NULL,
+    PRIMARY KEY (request_sid, require_sid)
+);
+
+INSERT INTO skill_requirement VALUES
+    ( 2,  1),
+    ( 3,  1),
+    ( 4,  3),
+    ( 5,  3),
+    ( 7,  1),
+    ( 8,  1),
+    ( 8,  5),
+    ( 9,  1),
+    (10,  9),
+    (10,  6),
+    (11,  2),
+    (11,  9),
+    (12, 11),
+    (13, 11);
+
+-- -------------------------------------------------------------
+
+DROP TABLE IF EXISTS framework_requirement;
+CREATE TABLE framework_requirement (
+    request_fid int(11) NOT NULL,
+    require_sid int(11) NOT NULL,
+    PRIMARY KEY (request_fid, require_sid)
+);
+
+INSERT INTO framework_requirement VALUES
+    (1, 13),
+    (2, 13),
+    (3, 13),
+    (4, 13),
+    (4,  7),
+    (5, 13),
+    (6, 13),
+    (7,  3),
+    (8, 12),
+    (8, 13),
+    (9, 12);
+
+-- -------------------------------------------------------------
+
+DROP TABLE IF EXISTS user_achievement;
+CREATE TABLE user_achievement (
+    uid int(11) NOT NULL,
+    aid int(11) NOT NULL,
+    PRIMARY KEY (uid, aid)
+);
+
+-- -------------------------------------------------------------
+
+DROP TABLE IF EXISTS user_skill;
+CREATE TABLE user_skill (
+    uid int(11) NOT NULL,
+    sid int(11) NOT NULL,
+    PRIMARY KEY (uid, sid)
+);
+
+INSERT INTO user_skill VALUES
+    (1,  1),
+    (1,  3),
+    (2,  1),
+    (2,  9),
+    (3,  6),
+    (4,  1),
+    (4,  2),
+    (5,  1),
+    (5,  2),
+    (5,  9),
+    (5, 11),
+    (5, 12),
+    (6,  1),
+    (6,  2),
+    (6,  9),
+    (6, 11),
+    (6, 13),
+    (8,  1),
+    (8,  4),
+    (8,  5),
+    (8,  9),
+    (8, 10);
+
+-- -------------------------------------------------------------
+
+DROP TABLE IF EXISTS user_language;
+CREATE TABLE user_language (
+    uid int(11) NOT NULL,
+    lid int(11) NOT NULL,
+    PRIMARY KEY (uid, lid)
+);
+
+INSERT INTO user_language VALUES
+    (1,  9),
+    (2,  2),
+    (3,  1),
+    (3,  4),
+    (4,  2),
+    (5,  2),
+    (5,  3),
+    (5,  8),
+    (6,  4),
+    (6,  5),
+    (6, 11),
+    (6, 12),
+    (6, 13),
+    (7, 14),
+    (8,  4),
+    (8,  5);
+
+-- -------------------------------------------------------------
+
+DROP TABLE IF EXISTS user_framework;
+CREATE TABLE user_framework (
+    uid int(11) NOT NULL,
+    fid int(11) NOT NULL,
+    PRIMARY KEY (uid, fid)
+);
+
+INSERT INTO user_framework VALUES
+    (5, 9),
+    (6, 5),
+    (6, 7);
