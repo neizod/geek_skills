@@ -160,9 +160,9 @@ INSERT INTO achievements VALUES
 
 DROP TABLE IF EXISTS skill_requirement;
 CREATE TABLE skill_requirement (
-    request_sid int(11) NOT NULL,
-    require_sid int(11) NOT NULL,
-    PRIMARY KEY (request_sid, require_sid)
+    id int(11) NOT NULL,
+    sid int(11) NOT NULL,
+    PRIMARY KEY (id, sid)
 );
 
 INSERT INTO skill_requirement VALUES
@@ -186,9 +186,9 @@ INSERT INTO skill_requirement VALUES
 
 DROP TABLE IF EXISTS framework_requirement;
 CREATE TABLE framework_requirement (
-    request_fid int(11) NOT NULL,
-    require_sid int(11) NOT NULL,
-    PRIMARY KEY (request_fid, require_sid)
+    id int(11) NOT NULL,
+    sid int(11) NOT NULL,
+    PRIMARY KEY (id, sid)
 );
 
 INSERT INTO framework_requirement VALUES
