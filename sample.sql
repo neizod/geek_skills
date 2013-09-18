@@ -7,27 +7,27 @@ USE geek_skills;
 
 DROP FUNCTION IF EXISTS l;
 CREATE FUNCTION l (lang varchar(64)) RETURNS int(11)
-    RETURN (SELECT id FROM languages WHERE name=lang);
+    RETURN (SELECT lid FROM languages WHERE name=lang);
 
 DROP FUNCTION IF EXISTS f;
 CREATE FUNCTION f (frame varchar(64)) RETURNS int(11)
-    RETURN (SELECT id FROM frameworks WHERE name=frame);
+    RETURN (SELECT fid FROM frameworks WHERE name=frame);
 
 DROP FUNCTION IF EXISTS s;
 CREATE FUNCTION s (skill varchar(64)) RETURNS int(11)
-    RETURN (SELECT id FROM skills WHERE name LIKE CONCAT('%', skill, '%'));
+    RETURN (SELECT sid FROM skills WHERE name LIKE CONCAT('%', skill, '%'));
 
 DROP FUNCTION IF EXISTS a;
 CREATE FUNCTION a (ac varchar(64)) RETURNS int(11)
-    RETURN (SELECT id FROM achievements WHERE name LIKE CONCAT('%', ac, '%'));
+    RETURN (SELECT aid FROM achievements WHERE name LIKE CONCAT('%', ac, '%'));
 
 -- -------------------------------------------------------------
 
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
-    id int(11) NOT NULL AUTO_INCREMENT,
+    uid int(11) NOT NULL AUTO_INCREMENT,
     name varchar(64) NOT NULL,
-    PRIMARY KEY (id),
+    PRIMARY KEY (uid),
     UNIQUE KEY (name)
 );
 
@@ -45,9 +45,9 @@ INSERT INTO users VALUES
 
 DROP TABLE IF EXISTS skills;
 CREATE TABLE skills (
-    id int(11) NOT NULL AUTO_INCREMENT,
+    sid int(11) NOT NULL AUTO_INCREMENT,
     name varchar(64) NOT NULL,
-    PRIMARY KEY (id),
+    PRIMARY KEY (sid),
     UNIQUE KEY (name)
 );
 
@@ -60,20 +60,24 @@ INSERT INTO skills VALUES
     (NULL, 'system programming'),
     (NULL, 'regular expression'),
     (NULL, 'network security'),
-    (NULL, 'file base'),
+    (NULL, 'data structrue'),
     (NULL, 'database'),
     (NULL, 'data mining'),
     (NULL, 'model view controller'),
     (NULL, 'mobile application'),
-    (NULL, 'web application');
+    (NULL, 'web application'),
+    (NULL, 'computer architecture'),
+    (NULL, 'ai'),
+    (NULL, 'algorithm'),
+    (NULL, 'compiler');
 
 -- -------------------------------------------------------------
 
 DROP TABLE IF EXISTS languages;
 CREATE TABLE languages (
-    id int(11) NOT NULL AUTO_INCREMENT,
+    lid int(11) NOT NULL AUTO_INCREMENT,
     name varchar(64) NOT NULL,
-    PRIMARY KEY (id),
+    PRIMARY KEY (lid),
     UNIQUE KEY (name)
 );
 
@@ -99,10 +103,10 @@ INSERT INTO languages VALUES
 
 DROP TABLE IF EXISTS frameworks;
 CREATE TABLE frameworks (
-    id int(11) NOT NULL AUTO_INCREMENT,
+    fid int(11) NOT NULL AUTO_INCREMENT,
     name varchar(64) NOT NULL,
     lid int(11) NOT NULL,
-    PRIMARY KEY (id),
+    PRIMARY KEY (fid),
     UNIQUE KEY (name)
 );
 
@@ -121,10 +125,10 @@ INSERT INTO frameworks VALUES
 
 DROP TABLE IF EXISTS achievements;
 CREATE TABLE achievements (
-    id int(11) NOT NULL AUTO_INCREMENT,
+    aid int(11) NOT NULL AUTO_INCREMENT,
     name varchar(64) NOT NULL,
     description text,
-    PRIMARY KEY (id),
+    PRIMARY KEY (aid),
     UNIQUE KEY (name)
 );
 
@@ -160,35 +164,39 @@ INSERT INTO achievements VALUES
 
 DROP TABLE IF EXISTS skill_requirement;
 CREATE TABLE skill_requirement (
-    id int(11) NOT NULL,
+    rid int(11) NOT NULL,
     sid int(11) NOT NULL,
-    PRIMARY KEY (id, sid)
+    PRIMARY KEY (rid, sid)
 );
 
 INSERT INTO skill_requirement VALUES
-    (s('oop'),        s('basic')),
+    (s('algorithm'),  s('basic')),
     (s('functional'), s('basic')),
     (s('logic'),      s('functional')),
-    (s('concurrent'), s('basic')),
-    (s('system'),     s('file')),
-    (s('system'),     s('regular ex')),
-    (s('security'),   s('system')),
-    (s('file'),       s('concurrent')),
-    (s('database'),   s('basic')),
+    (s('ai'),         s('logic')),
+    (s('ai'),         s('database')),
+    (s('database'),   s('data structrue')),
     (s('mining'),     s('database')),
     (s('mining'),     s('regular ex')),
+    (s('oop'),        s('basic')),
     (s('model'),      s('oop')),
     (s('model'),      s('database')),
     (s('mobile'),     s('model')),
-    (s('web'),        s('model'));
+    (s('web'),        s('model')),
+    (s('concurrent'), s('basic')),
+    (s('concurrent'), s('architecture')),
+    (s('system'),     s('concurrent')),
+    (s('security'),   s('system')),
+    (s('compiler'),   s('system')),
+    (s('compiler'),   s('regular ex'));
 
 -- -------------------------------------------------------------
 
 DROP TABLE IF EXISTS framework_requirement;
 CREATE TABLE framework_requirement (
-    id int(11) NOT NULL,
+    fid int(11) NOT NULL,
     sid int(11) NOT NULL,
-    PRIMARY KEY (id, sid)
+    PRIMARY KEY (fid, sid)
 );
 
 INSERT INTO framework_requirement VALUES
