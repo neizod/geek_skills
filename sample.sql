@@ -1,3 +1,5 @@
+DROP DATABASE IF EXISTS geek_skills;
+CREATE DATABASE geek_skills;
 USE geek_skills;
 
 -- -------------------------------------------------------------
@@ -5,25 +7,20 @@ USE geek_skills;
 -- HELPER FUNCTION FOR READABILITY SOURCE ONLY
 -- ===========================================
 
-DROP FUNCTION IF EXISTS l;
 CREATE FUNCTION l (lang varchar(64)) RETURNS int(11)
     RETURN (SELECT lid FROM languages WHERE name=lang);
 
-DROP FUNCTION IF EXISTS f;
 CREATE FUNCTION f (frame varchar(64)) RETURNS int(11)
     RETURN (SELECT fid FROM frameworks WHERE name=frame);
 
-DROP FUNCTION IF EXISTS s;
 CREATE FUNCTION s (skill varchar(64)) RETURNS int(11)
     RETURN (SELECT sid FROM skills WHERE name LIKE CONCAT('%', skill, '%'));
 
-DROP FUNCTION IF EXISTS a;
 CREATE FUNCTION a (ac varchar(64)) RETURNS int(11)
     RETURN (SELECT aid FROM achievements WHERE name LIKE CONCAT('%', ac, '%'));
 
 -- -------------------------------------------------------------
 
-DROP TABLE IF EXISTS users;
 CREATE TABLE users (
     uid int(11) NOT NULL AUTO_INCREMENT,
     name varchar(64) NOT NULL,
@@ -43,7 +40,6 @@ INSERT INTO users VALUES
 
 -- -------------------------------------------------------------
 
-DROP TABLE IF EXISTS skills;
 CREATE TABLE skills (
     sid int(11) NOT NULL AUTO_INCREMENT,
     name varchar(64) NOT NULL,
@@ -73,7 +69,6 @@ INSERT INTO skills VALUES
 
 -- -------------------------------------------------------------
 
-DROP TABLE IF EXISTS languages;
 CREATE TABLE languages (
     lid int(11) NOT NULL AUTO_INCREMENT,
     name varchar(64) NOT NULL,
@@ -101,7 +96,6 @@ INSERT INTO languages VALUES
 
 -- -------------------------------------------------------------
 
-DROP TABLE IF EXISTS frameworks;
 CREATE TABLE frameworks (
     fid int(11) NOT NULL AUTO_INCREMENT,
     name varchar(64) NOT NULL,
@@ -123,7 +117,6 @@ INSERT INTO frameworks VALUES
 
 -- -------------------------------------------------------------
 
-DROP TABLE IF EXISTS achievements;
 CREATE TABLE achievements (
     aid int(11) NOT NULL AUTO_INCREMENT,
     name varchar(64) NOT NULL,
@@ -162,7 +155,6 @@ INSERT INTO achievements VALUES
 
 -- -------------------------------------------------------------
 
-DROP TABLE IF EXISTS skill_requirement;
 CREATE TABLE skill_requirement (
     rid int(11) NOT NULL,
     sid int(11) NOT NULL,
@@ -192,7 +184,6 @@ INSERT INTO skill_requirement VALUES
 
 -- -------------------------------------------------------------
 
-DROP TABLE IF EXISTS framework_requirement;
 CREATE TABLE framework_requirement (
     fid int(11) NOT NULL,
     sid int(11) NOT NULL,
@@ -214,7 +205,6 @@ INSERT INTO framework_requirement VALUES
 
 -- -------------------------------------------------------------
 
-DROP TABLE IF EXISTS user_achievement;
 CREATE TABLE user_achievement (
     uid int(11) NOT NULL,
     aid int(11) NOT NULL,
@@ -223,7 +213,6 @@ CREATE TABLE user_achievement (
 
 -- -------------------------------------------------------------
 
-DROP TABLE IF EXISTS user_skill;
 CREATE TABLE user_skill (
     uid int(11) NOT NULL,
     sid int(11) NOT NULL,
@@ -275,7 +264,6 @@ INSERT INTO user_skill VALUES
 
 -- -------------------------------------------------------------
 
-DROP TABLE IF EXISTS user_language;
 CREATE TABLE user_language (
     uid int(11) NOT NULL,
     lid int(11) NOT NULL,
@@ -331,7 +319,6 @@ INSERT INTO user_language VALUES
 
 -- -------------------------------------------------------------
 
-DROP TABLE IF EXISTS user_framework;
 CREATE TABLE user_framework (
     uid int(11) NOT NULL,
     fid int(11) NOT NULL,
