@@ -4,8 +4,11 @@ USE geek_skills;
 
 -- -------------------------------------------------------------
 
--- HELPER FUNCTION FOR READABILITY SOURCE ONLY
--- ===========================================
+-- HELPER FUNCTION FOR READABILITY SOURCE AND SHORTHAND TRIGGER CODING
+-- ===================================================================
+-- l, f, s, a --> one letter function name for fast query by name
+
+-- -------------------------------------------------------------
 
 CREATE FUNCTION l (lang varchar(64)) RETURNS int(11)
     RETURN (SELECT lid FROM languages WHERE name=lang);
@@ -18,6 +21,16 @@ CREATE FUNCTION s (skill varchar(64)) RETURNS int(11)
 
 CREATE FUNCTION a (ac varchar(64)) RETURNS int(11)
     RETURN (SELECT aid FROM achievements WHERE name LIKE CONCAT('%', ac, '%'));
+
+-- -------------------------------------------------------------
+
+-- DATA TABLES
+-- ===========
+-- users --> the only insert+delet data table here
+-- skills
+-- language
+-- frameworks
+-- achievements
 
 -- -------------------------------------------------------------
 
