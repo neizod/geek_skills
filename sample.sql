@@ -101,7 +101,8 @@ CREATE TABLE frameworks (
     name varchar(64) NOT NULL,
     lid int(11) NOT NULL,
     PRIMARY KEY (fid),
-    UNIQUE KEY (name)
+    UNIQUE KEY (name),
+    FOREIGN KEY (lid) REFERENCES languages (lid)
 );
 
 INSERT INTO frameworks VALUES
@@ -158,7 +159,9 @@ INSERT INTO achievements VALUES
 CREATE TABLE skill_requirement (
     rid int(11) NOT NULL,
     sid int(11) NOT NULL,
-    PRIMARY KEY (rid, sid)
+    PRIMARY KEY (rid, sid),
+    FOREIGN KEY (rid) REFERENCES skills (sid),
+    FOREIGN KEY (sid) REFERENCES skills (sid)
 );
 
 INSERT INTO skill_requirement VALUES
@@ -187,7 +190,9 @@ INSERT INTO skill_requirement VALUES
 CREATE TABLE framework_requirement (
     fid int(11) NOT NULL,
     sid int(11) NOT NULL,
-    PRIMARY KEY (fid, sid)
+    PRIMARY KEY (fid, sid),
+    FOREIGN KEY (fid) REFERENCES frameworks (fid),
+    FOREIGN KEY (sid) REFERENCES skills (sid)
 );
 
 INSERT INTO framework_requirement VALUES
@@ -208,7 +213,9 @@ INSERT INTO framework_requirement VALUES
 CREATE TABLE user_achievement (
     uid int(11) NOT NULL,
     aid int(11) NOT NULL,
-    PRIMARY KEY (uid, aid)
+    PRIMARY KEY (uid, aid),
+    FOREIGN KEY (uid) REFERENCES users (uid),
+    FOREIGN KEY (aid) REFERENCES achievements (aid)
 );
 
 -- -------------------------------------------------------------
@@ -216,7 +223,9 @@ CREATE TABLE user_achievement (
 CREATE TABLE user_skill (
     uid int(11) NOT NULL,
     sid int(11) NOT NULL,
-    PRIMARY KEY (uid, sid)
+    PRIMARY KEY (uid, sid),
+    FOREIGN KEY (uid) REFERENCES users (uid),
+    FOREIGN KEY (sid) REFERENCES skills (sid)
 );
 
 DELIMITER !
@@ -267,7 +276,9 @@ INSERT INTO user_skill VALUES
 CREATE TABLE user_language (
     uid int(11) NOT NULL,
     lid int(11) NOT NULL,
-    PRIMARY KEY (uid, lid)
+    PRIMARY KEY (uid, lid),
+    FOREIGN KEY (uid) REFERENCES users (uid),
+    FOREIGN KEY (lid) REFERENCES languages (lid)
 );
 
 DELIMITER !
@@ -322,7 +333,9 @@ INSERT INTO user_language VALUES
 CREATE TABLE user_framework (
     uid int(11) NOT NULL,
     fid int(11) NOT NULL,
-    PRIMARY KEY (uid, fid)
+    PRIMARY KEY (uid, fid),
+    FOREIGN KEY (uid) REFERENCES users (uid),
+    FOREIGN KEY (fid) REFERENCES frameworks (fid)
 );
 
 DELIMITER !
