@@ -82,7 +82,7 @@ img.fix-size {
 <div class="column" style="position: relative; width: 455px;">
   <form method="post">
   <? foreach ($skill_status as $i => $stat): ?>
-    <? $disabled = $stat == 'unobtainable' ? 'disabled' : '' ; ?>
+    <? $disabled = $stat == 'unskilled' ? '' : 'disabled' ; ?>
     <button name="sid" value="<?=$i?>" <?=$disabled?>>
       <img class="card fix-size <?=$stat?>" src="img/s<?=$i?>.jpg" />
     </button>
