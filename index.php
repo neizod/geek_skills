@@ -59,16 +59,10 @@ button[name='sid'] {
     margin:  0px;
 }
 
-img.unobtainable {
+img.unskillful {
     -webkit-filter: grayscale(100%);
        -moz-filter: grayscale(100%);
             filter: grayscale(100%);
-}
-
-img.unskilled {
-    -webkit-filter: sepia(100%);
-       -moz-filter: sepia(100%);
-            filter: sepia(100%);
 }
 
 img.fix-size {
@@ -86,16 +80,22 @@ img.fix-size {
   <p>((text area for display extra info))</p>
 </div>
 
+
 <div class="column" style="position: relative; width: 455px;">
   <form method="post">
   <? foreach ($skill_status as $i => $stat): ?>
+
+    <? $skillful = $stat == 'skilled' ? 'skillful' : 'unskillful' ; ?>
     <? $disabled = $stat == 'unskilled' ? '' : 'disabled' ; ?>
-    <button name="sid" value="<?=$i?>" <?=$disabled?>>
-      <img class="card fix-size <?=$stat?>" src="img/s<?=$i?>.jpg" />
-    </button>
+
     <? if (file_exists("img/a$i.png")): ?>
-      <img class="arrow" id="a<?=$i?>" src="<?="img/a$i.png"?>">
+      <img class="arrow <?=$skillful?>" id="a<?=$i?>" src="<?="img/a$i.png"?>">
     <? endif; ?>
+
+    <button name="sid" value="<?=$i?>" <?=$disabled?>>
+      <img class="card fix-size <?=$skillful?>" src="img/s<?=$i?>.jpg" />
+    </button>
+
   <? endforeach; ?>
   </form>
 </div>
