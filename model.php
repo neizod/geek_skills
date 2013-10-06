@@ -47,11 +47,10 @@ class User {
         $this->db->query($sql);
     }
 
-    public function skills() {
+    public function skilled() {
         $skills = [];
-        $sql = "SELECT us.sid
-                FROM   user_skill us
-                WHERE  us.uid = {$this->uid}";
+        $sql = file_get_contents('sql/user_skilled.sql');
+        $sql = str_replace('{uid}', $this->uid, $sql);
         foreach ($this->db->query($sql) as $row) {
             $sid = $row['sid'];
             $skills[$sid] = 'skilled';
@@ -59,15 +58,10 @@ class User {
         return $skills;
     }
 
-    public function unskills() {
+    public function unskilled() {
         $skills = [];
-        $sql = "SELECT s.sid
-                FROM   skills s
-                WHERE  s.sid NOT IN (
-                    SELECT us.sid
-                    FROM   user_skill us
-                    WHERE  us.uid={$this->uid}
-                )";
+        $sql = file_get_contents('sql/user_unskilled.sql');
+        $sql = str_replace('{uid}', $this->uid, $sql);
         foreach ($this->db->query($sql) as $row) {
             $sid = $row['sid'];
             $skills[$sid] = null;
@@ -75,17 +69,10 @@ class User {
         return $skills;
     }
 
-    public function unobtainable_skills() {
+    public function unobtainable() {
         $skills = [];
-        $sql = "SELECT DISTINCT s.sid
-                FROM   skills s
-                JOIN   skill_requirement sr
-                ON     sr.rid=s.sid
-                WHERE  sr.sid NOT IN (
-                    SELECT us.sid
-                    FROM   user_skill us
-                    WHERE  us.uid={$this->uid}
-                )";
+        $sql = file_get_contents('sql/user_unobtainable.sql');
+        $sql = str_replace('{uid}', $this->uid, $sql);
         foreach ($this->db->query($sql) as $row) {
             $sid = $row['sid'];
             $skills[$sid] = 'n/a';
@@ -94,9 +81,9 @@ class User {
     }
 
     public function skills_status() {
-        $skills = $this->skills();
-        $skills += $this->unobtainable_skills();
-        $skills += $this->unskills();
+        $skills = $this->skilled();
+        $skills += $this->unobtainable();
+        $skills += $this->unskilled();
         return $skills;
     }
 }
