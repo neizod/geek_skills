@@ -6,6 +6,7 @@
 
 <ul>
 <? foreach (glob('*.sql') as $f): ?>
+  <? if ($f == 'sample-data.sql') continue; ?>
   <li><a href="<?=$f?>"><?=$f?></a></li>
 <? endforeach; ?>
 </ul>
