@@ -64,7 +64,7 @@ class User {
         $sql = str_replace('{uid}', $this->uid, $sql);
         foreach ($this->db->query($sql) as $row) {
             $sid = $row['sid'];
-            $skills[$sid] = null;
+            $skills[$sid] = 'unskilled';
         }
         return $skills;
     }
@@ -75,7 +75,7 @@ class User {
         $sql = str_replace('{uid}', $this->uid, $sql);
         foreach ($this->db->query($sql) as $row) {
             $sid = $row['sid'];
-            $skills[$sid] = 'n/a';
+            $skills[$sid] = 'unobtainable';
         }
         return $skills;
     }

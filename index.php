@@ -20,7 +20,7 @@ if (isset ($_POST['sid'])) {
     $user->add_skill($sid);
 }
 
-$skst = $user->skills_status();
+$skill_status = $user->skills_status();
 
 ?>
 
@@ -52,7 +52,7 @@ button[name='sid'] {
     margin:  0px;
 }
 
-button[disabled] img.unskilled {
+img.unobtainable {
     -webkit-filter: grayscale(100%);
        -moz-filter: grayscale(100%);
             filter: grayscale(100%);
@@ -82,12 +82,11 @@ img.fix-size {
 
 <div class="column" style="position: relative; width: 383px;">
   <form method="post">
-  <? for ($i=1; $i<=18; $i++): ?>
-    <? $disabled = $skst[$i] == 'n/a' ? 'disabled' : '' ; ?>
+  <? foreach ($skill_status as $i => $stat): ?>
+    <? $disabled = $stat == 'unobtainable' ? 'disabled' : '' ; ?>
     <button name="sid" value="<?=$i?>" <?=$disabled?>>
-      <? $skilled = $skst[$i] == 'skilled' ? 'skilled' : 'unskilled' ; ?>
-      <img class="card fix-size <?=$skilled?>" src="img/s<?=$i?>.jpg" />
+      <img class="card fix-size <?=$stat?>" src="img/s<?=$i?>.jpg" />
     </button>
-  <? endfor; ?>
+  <? endforeach; ?>
   </form>
 </div>
