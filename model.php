@@ -29,6 +29,16 @@ $skill = new Skill();
 class User {
     protected $db;
 
+    public static function all() {
+        global $db;
+        $users = [];
+        $sql = "SELECT uid, name FROM users";
+        foreach ($db->query($sql) as $row) {
+            $users[] = ['uid' => $row['uid'], 'name' => $row['name']];
+        }
+        return $users;
+    }
+
     public function __construct($uid) {
         global $db;
         $this->db = $db;

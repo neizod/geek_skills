@@ -75,15 +75,33 @@ img.fix-size {
 }
 </style>
 
+
 <div class="column" style="width: 300px;">
   <h1>Skill Tree</h1>
-  <h3>Welcome back, <?=$user->name?>!</h3>
-  <p>about me: <i><?=$user->more?></i></p>
-  <form method="post">
-    <button name="reset">reset all skill!</button>
-  </form>
-  <p>((text area for display extra info))</p>
+
+  <? if (!$user->uid): ?>
+
+    <h3>please select user</h3>
+    <ul>
+    <? foreach (User::all() as $auser): ?>
+      <li><a href="?uid=<?=$auser['uid']?>"><?=$auser['name']?></a></li>
+    <? endforeach; ?>
+    </ul>
+
+  <? else: ?>
+
+    <h3>welcome back, <?=$user->name?>!</h3>
+    <p><i><?=$user->more?></i></p>
+
+    <form method="post">
+      <button name="reset">reset all skill!</button>
+    </form>
+
+  <? endif; ?>
+
+  <p id="skill-more">((text area for display extra info))</p>
 </div>
+
 
 
 <div class="column" style="position: relative; width: 455px;">
