@@ -42,7 +42,7 @@ div.column {
     margin: 0px;
     border-style: solid;
     border-width: thin;
-    border-color: #999;
+    border-color: #09f;
 }
 
 button[name='sid'] {
@@ -65,11 +65,10 @@ img.unskilled {
 }
 
 img.fix-size {
-    height: 80px;
-    width:  80px;
+    height: 78px;
+    width:  78px;
 }
 </style>
-
 
 <div class="column" style="width: 300px;">
   <h1>Skill Tree</h1>
@@ -80,7 +79,7 @@ img.fix-size {
   <p>((text area for display extra info))</p>
 </div>
 
-<div class="column" style="position: relative; width: 383px;">
+<div class="column" style="position: relative; width: 455px;">
   <form method="post">
   <? foreach ($skill_status as $i => $stat): ?>
     <? $disabled = $stat == 'unobtainable' ? 'disabled' : '' ; ?>
