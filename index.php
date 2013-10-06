@@ -52,6 +52,10 @@ button[name='sid'] {
     margin:  0px;
 }
 
+button:not([disabled]) {
+    cursor: pointer;
+}
+
 .arrow {
     position: absolute;
     padding: 0px;
@@ -73,7 +77,8 @@ img.fix-size {
 
 <div class="column" style="width: 300px;">
   <h1>Skill Tree</h1>
-  <p>((user name goes here))</p>
+  <h3>Welcome back, <?=$user->name?>!</h3>
+  <p>about me: <i><?=$user->more?></i></p>
   <form method="post">
     <button name="reset">reset all skill!</button>
   </form>

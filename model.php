@@ -33,6 +33,12 @@ class User {
         global $db;
         $this->db = $db;
         $this->uid = $uid;
+
+        $sql = "SELECT name, more FROM users WHERE uid={$this->uid}";
+        foreach ($this->db->query($sql) as $row) {
+            $this->name = $row['name'];
+            $this->more = $row['more'];
+        }
     }
 
     public function add_skill($sid) {

@@ -35,21 +35,22 @@ CREATE FUNCTION a (ac varchar(64)) RETURNS int(11)
 -- -------------------------------------------------------------
 
 CREATE TABLE users (
-    uid int(11) NOT NULL AUTO_INCREMENT,
+    uid  int(11)     NOT NULL AUTO_INCREMENT,
     name varchar(64) NOT NULL,
+    more text        NOT NULL DEFAULT '',
     PRIMARY KEY (uid),
     UNIQUE KEY (name)
 );
 
 INSERT INTO users VALUES
-    (NULL, 'foo'),
-    (NULL, 'bar'),
-    (NULL, 'spam'),
-    (NULL, 'eggs'),
-    (NULL, 'hannah'),
-    (NULL, 'tester'),
-    (NULL, 'uzer'),
-    (NULL, 'xyzzy');
+    (NULL, 'foo',     'mathematician.'),
+    (NULL, 'bar',     'project manager, business man, i cant code.'),
+    (NULL, 'spam',    'i create shiny new language!'),
+    (NULL, 'eggs',    'mobile is the future <3'),
+    (NULL, 'hal9000', 'daisy, daisy.'),
+    (NULL, 'xyzzy',   'boring web dev.'),
+    (NULL, 'uzer',    '?'),
+    (NULL, 'tester',  'hacker');
 
 -- -------------------------------------------------------------
 
@@ -264,9 +265,10 @@ INSERT INTO user_skill VALUES
     (1, s('basic')),
     (1, s('algo')),
     (1, s('functional')),
-    (2, s('basic')),
     (2, s('data structure')),
     (2, s('database')),
+    (2, s('regular ex')),
+    (2, s('mining')),
     (3, s('basic')),
     (3, s('computer architec')),
     (3, s('concurrent')),
@@ -274,15 +276,22 @@ INSERT INTO user_skill VALUES
     (3, s('regular ex')),
     (3, s('compiler')),
     (4, s('basic')),
+    (4, s('algo')),
     (4, s('oop')),
+    (4, s('data structure')),
+    (4, s('database')),
+    (4, s('model')),
+    (4, s('mobile')),
     (5, s('basic')),
     (5, s('algo')),
-    (5, s('oop')),
+    (5, s('functional')),
+    (5, s('logic')),
+    (5, s('data structure')),
     (5, s('database')),
-    (5, s('model')),
-    (5, s('mobile')),
+    (5, s('ai')),
     (6, s('basic')),
     (6, s('oop')),
+    (6, s('data structure')),
     (6, s('database')),
     (6, s('model')),
     (6, s('regular ex')),
@@ -296,7 +305,9 @@ INSERT INTO user_skill VALUES
     (8, s('data structure')),
     (8, s('database')),
     (8, s('mining')),
-    (8, s('ai'));
+    (8, s('ai')),
+    (8, s('system')),
+    (8, s('security'));
 
 -- -------------------------------------------------------------
 
@@ -343,9 +354,9 @@ INSERT INTO user_language VALUES
     (3, l('c')),
     (3, l('bash')),
     (4, l('java')),
+    (4, l('objective-c')),
+    (4, l('lua')),
     (5, l('java')),
-    (5, l('objective-c')),
-    (5, l('lua')),
     (6, l('bash')),
     (6, l('php')),
     (6, l('javascript')),
@@ -379,6 +390,6 @@ CREATE TRIGGER framework_achievement AFTER INSERT ON user_framework
 DELIMITER ;
 
 INSERT INTO user_framework VALUES
-    (5, f('corona')),
+    (4, f('corona')),
     (6, f('laravel')),
     (6, f('jquery'));
