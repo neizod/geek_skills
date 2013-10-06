@@ -52,6 +52,13 @@ button[name='sid'] {
     margin:  0px;
 }
 
+.arrow {
+    position: absolute;
+    padding: 0px;
+    border:  0px;
+    margin:  0px;
+}
+
 img.unobtainable {
     -webkit-filter: grayscale(100%);
        -moz-filter: grayscale(100%);
@@ -86,6 +93,9 @@ img.fix-size {
     <button name="sid" value="<?=$i?>" <?=$disabled?>>
       <img class="card fix-size <?=$stat?>" src="img/s<?=$i?>.jpg" />
     </button>
+    <? if (file_exists("img/a$i.png")): ?>
+      <img class="arrow" id="a<?=$i?>" src="<?="img/a$i.png"?>">
+    <? endif; ?>
   <? endforeach; ?>
   </form>
 </div>

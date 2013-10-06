@@ -16,3 +16,15 @@ button[value='15'] { top:   0px; left: 375px; }
 button[value='16'] { top: 375px; left:   0px; }
 button[value='17'] { top:   0px; left:   0px; }
 button[value='18'] { top: 500px; left: 250px; }
+
+.arrow#a1  { top:  29px; left:  81px; }
+.arrow#a2  { top: 206px; left: 280px; }
+.arrow#a3  { top: 206px; left:  30px; }
+.arrow#a4  { top: 331px; left:  30px; }
+.arrow#a5  { top: 206px; left: 405px; }
+.arrow#a6  { top: 449px; left: 332px; }
+.arrow#a7  { top: 529px; left:  81px; }
+.arrow#a9  { top: 206px; left: 155px; }
+.arrow#a10 { top: 279px; left:  81px; }
+.arrow#a12 { top: 324px; left: 207px; }
+.arrow#a15 { top:  81px; left: 405px; }
