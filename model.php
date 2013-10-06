@@ -65,15 +65,14 @@ class User {
     }
 
     public function add_skill($sid) {
-        $sql = "INSERT INTO user_skill VALUES ({$this->uid}, $sid)";
-        $this->db->query($sql);
+        $sql = contents('sql/user_add_skill.sql', ['{sid}' => $sid,
+                                                   '{uid}' => $this->uid]);
+        return $this->db->query($sql);
     }
 
     public function reset_all() {
-        $sql = "DELETE FROM user_achievement WHERE uid={$this->uid}";
-        $this->db->query($sql);
-        $sql = "DELETE FROM user_skill WHERE uid={$this->uid}";
-        $this->db->query($sql);
+        $sql = contents('sql/user_reset_all.sql', ['{uid}' => $this->uid]);
+        return $this->db->query($sql);
     }
 
     public function skilled() {

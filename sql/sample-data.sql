@@ -243,7 +243,7 @@ CREATE TABLE user_skill (
 );
 
 DELIMITER !
-CREATE TRIGGER skill_achievement AFTER INSERT ON user_skill
+CREATE TRIGGER add_skill_achievement AFTER INSERT ON user_skill
     FOR EACH ROW BEGIN
         CASE NEW.sid
             WHEN s('oop') THEN
@@ -256,6 +256,29 @@ CREATE TRIGGER skill_achievement AFTER INSERT ON user_skill
                 INSERT INTO user_achievement VALUES (NEW.uid, a('everywhere'));
             WHEN s('web') THEN
                 INSERT INTO user_achievement VALUES (NEW.uid, a('spider'));
+            ELSE BEGIN END;
+        END CASE;
+    END!
+
+
+CREATE TRIGGER del_skill_achievement AFTER DELETE ON user_skill
+    FOR EACH ROW BEGIN
+        CASE OLD.sid
+            WHEN s('oop') THEN
+                DELETE FROM user_achievement WHERE aid = a('class')
+                                             AND   uid = OLD.uid;
+            WHEN s('functional') THEN
+                DELETE FROM user_achievement WHERE aid = a('functional')
+                                             AND   uid = OLD.uid;
+            WHEN s('mining') THEN
+                DELETE FROM user_achievement WHERE aid = a('pickaxe')
+                                             AND   uid = OLD.uid;
+            WHEN s('mobile') THEN
+                DELETE FROM user_achievement WHERE aid = a('everywhere')
+                                             AND   uid = OLD.uid;
+            WHEN s('web') THEN
+                DELETE FROM user_achievement WHERE aid = a('spider')
+                                             AND   uid = OLD.uid;
             ELSE BEGIN END;
         END CASE;
     END!
@@ -323,7 +346,7 @@ CREATE TABLE user_language (
 );
 
 DELIMITER !
-CREATE TRIGGER language_achievement AFTER INSERT ON user_language
+CREATE TRIGGER add_language_achievement AFTER INSERT ON user_language
     FOR EACH ROW BEGIN
         CASE (SELECT count(*) FROM user_language ul WHERE ul.uid=NEW.uid)
             WHEN 1 THEN
@@ -346,6 +369,42 @@ CREATE TRIGGER language_achievement AFTER INSERT ON user_language
                 INSERT INTO user_achievement VALUES (NEW.uid, a('this'));
             WHEN l('brainfuck') THEN
                 INSERT INTO user_achievement VALUES (NEW.uid, a('!@#$%'));
+            ELSE BEGIN END;
+        END CASE;
+    END!
+
+
+CREATE TRIGGER del_language_achievement AFTER DELETE ON user_language
+    FOR EACH ROW BEGIN
+        CASE (SELECT count(*) FROM user_language ul WHERE ul.uid=OLD.uid)
+            WHEN 0 THEN
+                DELETE FROM user_achievement WHERE aid = 1
+                                             AND   uid = OLD.uid;
+            WHEN 1 THEN
+                DELETE FROM user_achievement WHERE aid = a('++')
+                                             AND   uid = OLD.uid;
+            WHEN 4 THEN
+                DELETE FROM user_achievement WHERE aid = a('101')
+                                             AND   uid = OLD.uid;
+            ELSE BEGIN END;
+        END CASE;
+
+        CASE OLD.lid
+            WHEN l('python') THEN
+                DELETE FROM user_achievement WHERE aid = a('psuedocode')
+                                             AND   uid = OLD.uid;
+            WHEN l('ruby') THEN
+                DELETE FROM user_achievement WHERE aid = a('happy')
+                                             AND   uid = OLD.uid;
+            WHEN l('perl') THEN
+                DELETE FROM user_achievement WHERE aid = a('tim toady')
+                                             AND   uid = OLD.uid;
+            WHEN l('javascript') THEN
+                DELETE FROM user_achievement WHERE aid = a('this')
+                                             AND   uid = OLD.uid;
+            WHEN l('brainfuck') THEN
+                DELETE FROM user_achievement WHERE aid = a('!@#$%')
+                                             AND   uid = OLD.uid;
             ELSE BEGIN END;
         END CASE;
     END!
@@ -380,13 +439,27 @@ CREATE TABLE user_framework (
 );
 
 DELIMITER !
-CREATE TRIGGER framework_achievement AFTER INSERT ON user_framework
+CREATE TRIGGER add_framework_achievement AFTER INSERT ON user_framework
     FOR EACH ROW BEGIN
         CASE (SELECT count(*) FROM user_framework uf WHERE uf.uid=NEW.uid)
             WHEN 1 THEN
                 INSERT INTO user_achievement VALUES (NEW.uid, a('frame'));
             WHEN 4 THEN
                 INSERT INTO user_achievement VALUES (NEW.uid, a('window'));
+            ELSE BEGIN END;
+        END CASE;
+    END!
+
+
+CREATE TRIGGER del_framework_achievement AFTER DELETE ON user_framework
+    FOR EACH ROW BEGIN
+        CASE (SELECT count(*) FROM user_framework uf WHERE uf.uid=OLD.uid)
+            WHEN 0 THEN
+                DELETE FROM user_achievement WHERE aid = a('frame')
+                                             AND   uid = OLD.uid;
+            WHEN 3 THEN
+                DELETE FROM user_achievement WHERE aid = a('window')
+                                             AND   uid = OLD.uid;
             ELSE BEGIN END;
         END CASE;
     END!
