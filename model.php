@@ -14,6 +14,7 @@ function contents($file, $find_replaces=null) {
 }
 
 
+/* XXX deprecated ?
 class Skill {
     protected $db;
 
@@ -37,6 +38,7 @@ class Skill {
     }
 }
 $skill = new Skill();
+*/
 
 
 class User {
@@ -45,7 +47,7 @@ class User {
     public static function all() {
         global $db;
         $users = [];
-        $sql = "SELECT uid, name FROM users";
+        $sql = contents('sql/show_users.sql');
         foreach ($db->query($sql) as $row) {
             $users[] = ['uid' => $row['uid'], 'name' => $row['name']];
         }
@@ -57,7 +59,7 @@ class User {
         $this->db = $db;
         $this->uid = $uid;
 
-        $sql = "SELECT name, more FROM users WHERE uid={$this->uid}";
+        $sql = contents('sql/user_more.sql', ['{uid}' => $this->uid]);
         foreach ($this->db->query($sql) as $row) {
             $this->name = $row['name'];
             $this->more = $row['more'];
