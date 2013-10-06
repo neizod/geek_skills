@@ -1,6 +1,19 @@
 <?php if (!defined('HIDESOURCE')) exit ('No direct script access allowed.');
 
 
+function contents($file, $find_replaces=null) {
+    $string = file_get_contents($file);
+    if (!is_null($find_replaces)) {
+        return str_replace(
+            array_keys($find_replaces),
+            array_values($find_replaces),
+            $string
+        );
+    }
+    return $string;
+}
+
+
 class Skill {
     protected $db;
 
@@ -65,8 +78,7 @@ class User {
 
     public function skilled() {
         $skills = [];
-        $sql = file_get_contents('sql/user_skilled.sql');
-        $sql = str_replace('{uid}', $this->uid, $sql);
+        $sql = contents('sql/user_skilled.sql', ['{uid}' => $this->uid]);
         foreach ($this->db->query($sql) as $row) {
             $sid = $row['sid'];
             $skills[$sid] = 'skilled';
@@ -76,8 +88,7 @@ class User {
 
     public function unskilled() {
         $skills = [];
-        $sql = file_get_contents('sql/user_unskilled.sql');
-        $sql = str_replace('{uid}', $this->uid, $sql);
+        $sql = contents('sql/user_unskilled.sql', ['{uid}' => $this->uid]);
         foreach ($this->db->query($sql) as $row) {
             $sid = $row['sid'];
             $skills[$sid] = 'unskilled';
@@ -87,8 +98,7 @@ class User {
 
     public function unobtainable() {
         $skills = [];
-        $sql = file_get_contents('sql/user_unobtainable.sql');
-        $sql = str_replace('{uid}', $this->uid, $sql);
+        $sql = contents('sql/user_unobtainable.sql', ['{uid}' => $this->uid]);
         foreach ($this->db->query($sql) as $row) {
             $sid = $row['sid'];
             $skills[$sid] = 'unobtainable';
