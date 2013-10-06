@@ -49,7 +49,7 @@ INSERT INTO users VALUES
     (NULL, 'eggs',    'mobile is the future <3'),
     (NULL, 'hal9000', 'daisy, daisy.'),
     (NULL, 'xyzzy',   'boring web dev.'),
-    (NULL, 'uzer',    '?'),
+    (NULL, 'uzer',    'i interest in finite automata.'),
     (NULL, 'tester',  'hacker');
 
 -- -------------------------------------------------------------
@@ -296,6 +296,8 @@ INSERT INTO user_skill VALUES
     (6, s('model')),
     (6, s('regular ex')),
     (6, s('web')),
+    (7, s('computer architec')),
+    (7, s('regular ex')),
     (8, s('basic')),
     (8, s('algo')),
     (8, s('functional')),
@@ -304,6 +306,7 @@ INSERT INTO user_skill VALUES
     (8, s('concurrent')),
     (8, s('data structure')),
     (8, s('database')),
+    (8, s('regular ex')),
     (8, s('mining')),
     (8, s('ai')),
     (8, s('system')),
