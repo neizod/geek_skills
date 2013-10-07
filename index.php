@@ -17,7 +17,7 @@ if (isset ($_POST['reset'])) {
 
 if (isset ($_POST['sid'])) {
     $sid = $_POST['sid'];
-    $user->add_skill($sid);
+    $user->click_skill($sid);
 }
 
 $skill_status = $user->skills_status();
@@ -108,8 +108,8 @@ img.fix-size {
   <form method="post">
   <? foreach ($skill_status as $i => $stat): ?>
 
-    <? $skillful = $stat == 'skilled' ? 'skillful' : 'unskillful' ; ?>
-    <? $disabled = $stat == 'unskilled' ? '' : 'disabled' ; ?>
+    <? $skillful = in_array($stat, ['skilled', 'unforgettable']) ? 'skillful' : 'unskillful' ; ?>
+    <? $disabled = in_array($stat, ['skilled', 'unskilled']) ? '' : 'disabled' ; ?>
 
     <? if (file_exists("img/a$i.png")): ?>
       <img class="arrow <?=$skillful?>" id="a<?=$i?>" src="<?="img/a$i.png"?>">

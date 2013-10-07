@@ -66,8 +66,23 @@ class User {
         }
     }
 
+    public function click_skill($sid) {
+        $sql = contents('sql/user_sel_skill.sql', ['{sid}' => $sid,
+                                                   '{uid}' => $this->uid]);
+        foreach ($this->db->query($sql) as $data_exists) {
+            return $this->del_skill($sid);
+        }
+        return $this->add_skill($sid);
+    }
+
     public function add_skill($sid) {
         $sql = contents('sql/user_add_skill.sql', ['{sid}' => $sid,
+                                                   '{uid}' => $this->uid]);
+        return $this->db->query($sql);
+    }
+
+    public function del_skill($sid) {
+        $sql = contents('sql/user_del_skill.sql', ['{sid}' => $sid,
                                                    '{uid}' => $this->uid]);
         return $this->db->query($sql);
     }
@@ -97,6 +112,16 @@ class User {
         return $skills;
     }
 
+    public function unforgettable() {
+        $skills = [];
+        $sql = contents('sql/user_unforgettable.sql', ['{uid}' => $this->uid]);
+        foreach ($this->db->query($sql) as $row) {
+            $sid = $row['sid'];
+            $skills[$sid] = 'unforgettable';
+        }
+        return $skills;
+    }
+
     public function unobtainable() {
         $skills = [];
         $sql = contents('sql/user_unobtainable.sql', ['{uid}' => $this->uid]);
@@ -108,7 +133,8 @@ class User {
     }
 
     public function skills_status() {
-        $skills = $this->skilled();
+        $skills = $this->unforgettable();
+        $skills += $this->skilled();
         $skills += $this->unobtainable();
         $skills += $this->unskilled();
         return $skills;
