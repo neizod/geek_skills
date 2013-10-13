@@ -14,37 +14,10 @@ function contents($file, $find_replaces=null) {
 }
 
 
-/* XXX deprecated ?
-class Skill {
-    protected $db;
-
-    public function __construct() {
-        global $db;
-        $this->db = $db;
-    }
-
-    function tree() {
-        $rskill = [];
-        $sql = "SELECT * FROM skill_requirement";
-        foreach ($this->db->query($sql) as $row) {
-            $rid = $row['rid'];
-            $sid = $row['sid'];
-            if (empty ($rskill[$rid])) {
-                $rskill[$rid] = [];
-            }
-            $rskill[$rid][$sid] = false;
-        }
-        return $rskill;
-    }
-}
-$skill = new Skill();
-*/
-
-
 class User {
     protected $db;
 
-    public static function all() {
+    public static function show_all() {
         global $db;
         $users = [];
         $sql = contents('sql/show_users.sql');
@@ -102,12 +75,12 @@ class User {
         return $skills;
     }
 
-    public function unskilled() {
+    public function learnable() {
         $skills = [];
-        $sql = contents('sql/user_unskilled.sql', ['{uid}' => $this->uid]);
+        $sql = contents('sql/user_learnable.sql', ['{uid}' => $this->uid]);
         foreach ($this->db->query($sql) as $row) {
             $sid = $row['sid'];
-            $skills[$sid] = 'unskilled';
+            $skills[$sid] = 'learnable';
         }
         return $skills;
     }
@@ -136,7 +109,7 @@ class User {
         $skills = $this->unforgettable();
         $skills += $this->skilled();
         $skills += $this->unobtainable();
-        $skills += $this->unskilled();
+        $skills += $this->learnable();
         return $skills;
     }
 }

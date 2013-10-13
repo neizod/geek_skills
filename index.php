@@ -26,55 +26,7 @@ $skill_status = $user->skills_status();
 
 
 <link rel="stylesheet" href="positioning.css" />
-<style>
-div.column {
-    float: left;
-    display: inline-block;
-    height: 100%;
-    border-style: solid;
-    border-width: thin;
-    border-color: #999;
-}
-
-.card {
-    display: inline-block;
-    padding: 0px;
-    margin: 0px;
-    border-style: solid;
-    border-width: thin;
-    border-color: #09f;
-}
-
-button[name='sid'] {
-    position: absolute;
-    padding: 0px;
-    border:  0px;
-    margin:  0px;
-}
-
-button:not([disabled]) {
-    cursor: pointer;
-}
-
-.arrow {
-    position: absolute;
-    padding: 0px;
-    border:  0px;
-    margin:  0px;
-}
-
-img.unskillful {
-    -webkit-filter: grayscale(100%);
-       -moz-filter: grayscale(100%);
-            filter: grayscale(100%);
-}
-
-img.fix-size {
-    height: 78px;
-    width:  78px;
-}
-</style>
-
+<link rel="stylesheet" href="style.css" />
 
 <div class="column" style="width: 300px;">
   <h1>Skill Tree</h1>
@@ -83,7 +35,7 @@ img.fix-size {
 
     <h3>please select user</h3>
     <ul>
-    <? foreach (User::all() as $auser): ?>
+    <? foreach (User::show_all() as $auser): ?>
       <li><a href="?uid=<?=$auser['uid']?>"><?=$auser['name']?></a></li>
     <? endforeach; ?>
     </ul>
@@ -109,7 +61,7 @@ img.fix-size {
   <? foreach ($skill_status as $i => $stat): ?>
 
     <? $skillful = in_array($stat, ['skilled', 'unforgettable']) ? 'skillful' : 'unskillful' ; ?>
-    <? $disabled = in_array($stat, ['skilled', 'unskilled']) ? '' : 'disabled' ; ?>
+    <? $disabled = in_array($stat, ['skilled', 'learnable']) ? '' : 'disabled' ; ?>
 
     <? if (file_exists("img/a$i.png")): ?>
       <img class="arrow <?=$skillful?>" id="a<?=$i?>" src="<?="img/a$i.png"?>">
