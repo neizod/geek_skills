@@ -3,18 +3,28 @@
 require 'database.php';
 require 'model.php';
 
+// create new user.
+if (isset ($_POST['username'])) {
+    $id = User::create($_POST['username']);
+    header("Location: .?uid={$id}", true, 303);
+    exit;
+}
+
+// try request exists user.
 if (isset ($_GET['uid'])) {
     $user = new User($_GET['uid']);
 } else {
     $user = new User(0);
 }
 
+// reset user skills.
 if (isset ($_POST['reset'])) {
     $user->reset_all();
     header("Location: .?uid={$user->uid}", true, 303);
     exit;
 }
 
+// update a skill
 if (isset ($_POST['sid'])) {
     $sid = $_POST['sid'];
     $user->click_skill($sid);
@@ -36,12 +46,18 @@ $achievements = $user->achievements();
 
   <? if (!$user->uid): ?>
 
-    <h3>please select user</h3>
+    <h3>please select a user</h3>
     <ul>
     <? foreach (User::show_all() as $auser): ?>
       <li><a href="?uid=<?=$auser['uid']?>"><?=$auser['name']?></a></li>
     <? endforeach; ?>
     </ul>
+
+    <h3>or create new user</h3>
+    <form method="post">
+      <input name="username">
+      <input type="submit">
+    </form>
 
   <? else: ?>
 
@@ -59,6 +75,8 @@ $achievements = $user->achievements();
       </li>
     <? endforeach; ?>
     </ul>
+
+    <hr />
 
     <form method="post">
       <button name="reset">reset all skill!</button>

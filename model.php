@@ -27,6 +27,16 @@ class User {
         return $users;
     }
 
+    public static function create($name) {
+        global $db;
+        $name = $db->escape_string($name);
+        $sql = contents('sql/create_user.sql', ['{name}' => $name]);
+        if ($db->query($sql)) {
+            return $db->insert_id;
+        }
+        return 0;
+    }
+
     public function __construct($uid) {
         global $db;
         $this->db = $db;
