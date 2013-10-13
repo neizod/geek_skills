@@ -37,6 +37,10 @@ class User {
             $this->name = $row['name'];
             $this->more = $row['more'];
         }
+        if (!isset ($this->name)) {
+            $this->name = 'none';
+            $this->more = '/!\\ the user for this uid does not exists';
+        }
     }
 
     public function click_skill($sid) {
@@ -111,5 +115,14 @@ class User {
         $skills += $this->unobtainable();
         $skills += $this->learnable();
         return $skills;
+    }
+
+    public function achievements() {
+        $achievements = [];
+        $sql = contents('sql/user_achievements.sql', ['{uid}' => $this->uid]);
+        foreach ($this->db->query($sql) as $row) {
+            $achievements[] = $row;
+        }
+        return $achievements;
     }
 }

@@ -7,6 +7,10 @@ div.column {
     border-color: #999;
 }
 
+.margin {
+    padding: 0em 1em;
+}
+
 .card {
     display: inline-block;
     padding: 0px;
@@ -14,6 +18,14 @@ div.column {
     border-style: solid;
     border-width: thin;
     border-color: #09f;
+}
+
+ul.no-bullet {
+    padding: 0px 10px;
+}
+
+ul.no-bullet li {
+    list-style-type: none;
 }
 
 button[name='sid'] {

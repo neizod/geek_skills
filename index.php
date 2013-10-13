@@ -21,6 +21,7 @@ if (isset ($_POST['sid'])) {
 }
 
 $skill_status = $user->skills_status();
+$achievements = $user->achievements();
 
 ?>
 
@@ -28,7 +29,9 @@ $skill_status = $user->skills_status();
 <link rel="stylesheet" href="positioning.css" />
 <link rel="stylesheet" href="style.css" />
 
-<div class="column" style="width: 300px;">
+
+<? // 1st column, show user detail. ?>
+<div class="column margin" style="width: 300px;">
   <h1>Skill Tree</h1>
 
   <? if (!$user->uid): ?>
@@ -42,8 +45,20 @@ $skill_status = $user->skills_status();
 
   <? else: ?>
 
-    <h3>welcome back, <?=$user->name?>!</h3>
+    <h2>welcome back, <?=$user->name?>!</h2>
+
+    <h3>about me:</h3>
     <p><i><?=$user->more?></i></p>
+
+    <h3>achievements</h3>
+    <ul class="no-bullet">
+    <? foreach ($achievements as $achv): ?>
+      <li title="<?=$achv['description']?>">
+        <img src="img/etc/star.png" style="width: 20px; height: 20px;" />
+        <?=$achv['name']?>
+      </li>
+    <? endforeach; ?>
+    </ul>
 
     <form method="post">
       <button name="reset">reset all skill!</button>
@@ -55,7 +70,7 @@ $skill_status = $user->skills_status();
 </div>
 
 
-
+<? // 2nd column, show skill tree. ?>
 <div class="column" style="position: relative; width: 455px;">
   <form method="post">
   <? foreach ($skill_status as $i => $stat): ?>
