@@ -84,7 +84,7 @@ class User {
         $sql = contents('sql/user_skilled.sql', ['{uid}' => $this->uid]);
         foreach ($this->db->query($sql) as $row) {
             $sid = $row['sid'];
-            $skills[$sid] = 'skilled';
+            $skills[$sid] = ['stat' => 'skilled', 'name' => $row['name']];
         }
         return $skills;
     }
@@ -94,7 +94,7 @@ class User {
         $sql = contents('sql/user_learnable.sql', ['{uid}' => $this->uid]);
         foreach ($this->db->query($sql) as $row) {
             $sid = $row['sid'];
-            $skills[$sid] = 'learnable';
+            $skills[$sid] = ['stat' => 'learnable', 'name' => $row['name']];
         }
         return $skills;
     }
@@ -104,7 +104,7 @@ class User {
         $sql = contents('sql/user_unforgettable.sql', ['{uid}' => $this->uid]);
         foreach ($this->db->query($sql) as $row) {
             $sid = $row['sid'];
-            $skills[$sid] = 'unforgettable';
+            $skills[$sid] = ['stat' => 'unforgettable', 'name' => $row['name']];
         }
         return $skills;
     }
@@ -114,7 +114,7 @@ class User {
         $sql = contents('sql/user_unobtainable.sql', ['{uid}' => $this->uid]);
         foreach ($this->db->query($sql) as $row) {
             $sid = $row['sid'];
-            $skills[$sid] = 'unobtainable';
+            $skills[$sid] = ['stat' => 'unobtainable', 'name' => $row['name']];
         }
         return $skills;
     }

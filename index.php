@@ -42,7 +42,7 @@ $achievements = $user->achievements();
 
 <? // 1st column, show user detail. ?>
 <div class="column margin" style="width: 300px;">
-  <h1>Skill Tree</h1>
+  <a href="."><h1>Skill Tree</h1></a>
 
   <? if (!$user->uid): ?>
 
@@ -76,13 +76,14 @@ $achievements = $user->achievements();
     <? endforeach; ?>
     </ul>
 
-    <hr />
-
+    <? // remove this part if neccessary ?>
     <form method="post">
       <button name="reset">reset all skill!</button>
     </form>
 
   <? endif; ?>
+
+  <hr />
 
   <p id="skill-more">((text area for display extra info))</p>
 </div>
@@ -91,16 +92,16 @@ $achievements = $user->achievements();
 <? // 2nd column, show skill tree. ?>
 <div class="column" style="position: relative; width: 455px;">
   <form method="post">
-  <? foreach ($skill_status as $i => $stat): ?>
+  <? foreach ($skill_status as $i => $skill): ?>
 
-    <? $skillful = in_array($stat, ['skilled', 'unforgettable']) ? 'skillful' : 'unskillful' ; ?>
-    <? $disabled = in_array($stat, ['skilled', 'learnable']) ? '' : 'disabled' ; ?>
+    <? $skillful = in_array($skill['stat'], ['skilled', 'unforgettable']) ? 'skillful' : 'unskillful' ; ?>
+    <? $disabled = in_array($skill['stat'], ['skilled', 'learnable']) ? '' : 'disabled' ; ?>
 
     <? if (file_exists("img/a$i.png")): ?>
       <img class="arrow <?=$skillful?>" id="a<?=$i?>" src="<?="img/a$i.png"?>">
     <? endif; ?>
 
-    <button name="sid" value="<?=$i?>" <?=$disabled?>>
+    <button name="sid" value="<?=$i?>" title="<?=$skill['name']?>" <?=$disabled?>>
       <img class="card fix-size <?=$skillful?>" src="img/s<?=$i?>.jpg" />
     </button>
 

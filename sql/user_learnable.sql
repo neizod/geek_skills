@@ -1,4 +1,4 @@
-SELECT s.sid
+SELECT s.sid, s.name
 FROM   skills s
 WHERE  s.sid NOT IN (
     SELECT us.sid
