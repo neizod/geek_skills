@@ -122,7 +122,7 @@ CREATE TABLE frameworks (
 INSERT INTO frameworks VALUES
     (NULL, 'django',      l('python')),
     (NULL, 'rails',       l('ruby')),
-    (NULL, 'grals',       l('java')),
+    (NULL, 'grails',      l('java')),
     (NULL, 'drupal',      l('php')),
     (NULL, 'laravel',     l('php')),
     (NULL, 'codeigniter', l('php')),
@@ -213,7 +213,7 @@ CREATE TABLE framework_requirement (
 INSERT INTO framework_requirement VALUES
     (f('django'),      s('web')),
     (f('rails'),       s('web')),
-    (f('grals'),       s('web')),
+    (f('grails'),      s('web')),
     (f('drupal'),      s('web')),
     (f('drupal'),      s('security')),
     (f('laravel'),     s('web')),
