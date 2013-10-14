@@ -14,6 +14,58 @@ function contents($file, $find_replaces=null) {
 }
 
 
+class Summary {
+    private $db;
+
+    public function __construct() {
+        global $db;
+        $this->db = $db;
+    }
+
+    public function nos_users() {
+        $sql = contents('sql/summary_nos_users.sql');
+        foreach ($this->db->query($sql) as $row) {
+            return $row['number'];
+        }
+    }
+
+    public function nos_all_skills() {
+        $sql = contents('sql/summary_nos_all_skills.sql');
+        foreach ($this->db->query($sql) as $row) {
+            return $row['number'];
+        }
+    }
+
+    public function max_achievements() {
+        $sql = contents('sql/summary_max_achvs.sql');
+        foreach ($this->db->query($sql) as $row) {
+            return $row['maximum'];
+        }
+    }
+
+    public function avg_skills() {
+        $sql = contents('sql/summary_avg_skills.sql');
+        foreach ($this->db->query($sql) as $row) {
+            return $row['average'];
+        }
+    }
+
+    public function avg_languages() {
+        $sql = contents('sql/summary_avg_langs.sql');
+        foreach ($this->db->query($sql) as $row) {
+            return $row['average'];
+        }
+    }
+
+    public function avg_frameworks() {
+        $sql = contents('sql/summary_avg_frames.sql');
+        foreach ($this->db->query($sql) as $row) {
+            return $row['average'];
+        }
+    }
+}
+
+
 class User {
     protected $db;
 

@@ -11,8 +11,11 @@ if (isset ($_POST['username'])) {
     exit;
 }
 
-// try request exists user.
-if (isset ($_GET['uid'])) {
+// check if see summary, else try request exists user.
+if (isset ($_GET['summary'])) {
+    $summary = new Summary();
+    $user = new User(0);
+} else if (isset ($_GET['uid'])) {
     $user = new User($_GET['uid']);
 } else {
     $user = new User(0);
@@ -46,8 +49,6 @@ if (isset ($_POST['fid'])) {
 
 
 // prepare data for view
-$skillful_list = ['skilled', 'unforgettable'];
-$clickable_list = ['skilled', 'learnable'];
 
 $skill_status = $user->skills_status();
 $achievements = $user->achievements();
@@ -58,35 +59,16 @@ $frame_req = $user->framework_requirement();
 ?>
 
 
+<title>Skill Tree</title>
 <link rel="stylesheet" href="positioning.css" />
 <link rel="stylesheet" href="style.css" />
-
-<script>
-function start_edit() {
-    document.getElementById('user-detail').style.display = 'none';
-    document.getElementById('edit-detail').style.display = '';
-    document.getElementById('edit-detail').detail.value =
-        document.getElementById('user-detail').innerHTML;
-
-    var me = document.getElementById('editor');
-    me.innerHTML = 'discard';
-    me.onclick = discard_edit;
-}
-function discard_edit() {
-    document.getElementById('user-detail').style.display = '';
-    document.getElementById('edit-detail').style.display = 'none';
-
-    var me = document.getElementById('editor');
-    me.innerHTML = 'edit';
-    me.onclick = start_edit;
-}
-</script>
+<script src="script.js"></script>
 
 <div class="wrapper">
 
 <? // 1st column, show user detail. ?>
 <div class="column margin" style="width: 320px;">
-  <a href="."><h1>Skill Tree</h1></a>
+  <a href="."><h1><img id="logo" src="img/etc/logo.png" /> Skill Tree</h1></a>
 
   <? if (!$user->uid): ?>
 
@@ -101,6 +83,16 @@ function discard_edit() {
     <form method="post">
       <input name="username">
       <input type="submit">
+    </form>
+
+    <hr />
+
+    <form>
+    <? if (isset ($summary)): ?>
+      <button>see skill tree</button>
+    <? else: ?>
+      <button name="summary">see summary</button>
+    <? endif; ?>
     </form>
 
   <? else: ?>
@@ -139,11 +131,52 @@ function discard_edit() {
 
 <? // 2nd column, show skill tree. ?>
 <div class="column" style="width: 455px;">
+
+  <? if (isset ($summary)): ?>
+
+  <div class="margin">
+    <h2>summary</h2>
+    <table>
+      <tr>
+        <th>subject</th>
+        <th>quantity</th>
+      </tr>
+      <tr>
+        <td>all users:</td>
+        <td><?=$summary->nos_users()?></td>
+      </tr>
+      <tr>
+        <td>average skills:</td>
+        <td><?=$summary->avg_skills()?></td>
+      </tr>
+      <tr>
+        <td>average languages:</td>
+        <td><?=$summary->avg_languages()?></td>
+      </tr>
+      <tr>
+        <td>average frameworks:</td>
+        <td><?=$summary->avg_frameworks()?></td>
+      </tr>
+      <tr>
+        <td>users learn all skills:</td>
+        <td><?=$summary->nos_all_skills()?></td>
+      </tr>
+      <tr>
+        <td>maximum achievements:</td>
+        <td><?=$summary->max_achievements()?></td>
+      </tr>
+    </table>
+  </div>
+
+  <? else: ?> 
+
   <form method="post">
   <? foreach ($skill_status as $i => $skill): ?>
 
-    <? $skillful = in_array($skill['stat'], $skillful_list) ? 'skillful' : 'unskillful' ; ?>
-    <? $disabled = in_array($skill['stat'], $clickable_list) ? '' : 'disabled' ; ?>
+    <? $skillful = in_array($skill['stat'], ['skilled', 'unforgettable']) ?
+            'skillful' : 'unskillful' ; ?>
+    <? $disabled = in_array($skill['stat'], ['skilled', 'learnable']) ?
+            '' : 'disabled' ; ?>
 
     <? if (file_exists("img/a$i.png")): ?>
       <img class="arrow <?=$skillful?>" id="a<?=$i?>" src="<?="img/a$i.png"?>">
@@ -155,6 +188,9 @@ function discard_edit() {
 
   <? endforeach; ?>
   </form>
+
+  <? endif; ?>
+
 </div>
 
 <? // 3nd column, show language and framework ?>
@@ -182,7 +218,7 @@ function discard_edit() {
       <ul class="no-bullet">
       <? foreach ($user->readable() as $i => $lang): ?>
         <li>
-          <button name="lid" value="<?=$i?>">/</button>
+          <button name="lid" value="<?=$i?>">o</button>
           <?=$lang?>
         </li>
       <? endforeach; ?>
@@ -207,13 +243,13 @@ function discard_edit() {
 
       <hr />
 
-      <h4>unknown</h4>
+      <h4>inexperience</h4>
       <ul class="no-bullet">
       <? foreach ($user->experimentable() as $i => $lang): ?>
         <li>
         <? $title_disabled = array_key_exists($i, $frame_req) ?
                 "title=\"require: {$frame_req[$i]}\" disabled" : '' ; ?>
-          <button name="fid" value="<?=$i?>" <?=$title_disabled?>>/</button>
+          <button name="fid" value="<?=$i?>" <?=$title_disabled?>>o</button>
           <?=$lang?>
         </li>
       <? endforeach; ?>

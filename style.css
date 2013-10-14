@@ -45,6 +45,18 @@ ul.no-bullet li {
     list-style-type: none;
 }
 
+tr:nth-child(even) {
+    background: #ddd;
+}
+
+tr:nth-child(odd) {
+    background: #FFF;
+}
+
+tr td:not(:first-child) {
+    text-align: right;
+}
+
 button[name='sid'] {
     position: absolute;
     padding: 0px;
@@ -77,4 +89,8 @@ img.unskillful {
 img.fix-size {
     height: 78px;
     width:  78px;
+}
+
+img#logo {
+    height: 42px;
 }
