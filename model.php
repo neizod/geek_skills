@@ -53,6 +53,18 @@ class User {
         }
     }
 
+
+    public function update_user($detail) {
+        $this->more = $detail;
+        $detail = $this->db->escape_string($detail);
+        $sql = contents('sql/update_user_detail.sql', ['{uid}' => $this->uid,
+                                                       '{detail}' => $detail]);
+        if (!$this->db->query($sql)) {
+            exit ('could not update database');
+        }
+    }
+
+
     public function click_skill($sid) {
         $sql = contents('sql/user_sel_skill.sql', ['{sid}' => $sid,
                                                    '{uid}' => $this->uid]);

@@ -54,6 +54,11 @@ button[name='sid'] {
 
 button:not([disabled]) {
     cursor: pointer;
+    font-weight: bold;
+}
+
+button[disabled] {
+    background-color: #fdd;
 }
 
 .arrow {

@@ -1,8 +1,8 @@
 DELETE FROM user_skill
 WHERE  uid = {uid}
 ;
-DELETE FROM user_framework
+DELETE FROM user_language
 WHERE  uid = {uid}
 ;
-DELETE FROM user_language
+DELETE FROM user_framework
 WHERE  uid = {uid}

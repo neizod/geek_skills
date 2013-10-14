@@ -21,8 +21,12 @@ if (isset ($_GET['uid'])) {
 // reset user skills, languages, and frameworks.
 if (isset ($_GET['reset'])) {
     $user->reset_all();
-    header("Location: .?uid={$user->uid}", true, 303);
-    exit;
+    header("Location: .?uid={$user->uid}", true, 303); exit;
+}
+
+// update user detail
+if (isset ($_POST['detail'])) {
+    $user->update_user($_POST['detail']);
 }
 
 // update a skill
@@ -57,6 +61,26 @@ $frame_req = $user->framework_requirement();
 <link rel="stylesheet" href="positioning.css" />
 <link rel="stylesheet" href="style.css" />
 
+<script>
+function start_edit() {
+    document.getElementById('user-detail').style.display = 'none';
+    document.getElementById('edit-detail').style.display = '';
+    document.getElementById('edit-detail').detail.value =
+        document.getElementById('user-detail').innerHTML;
+
+    var me = document.getElementById('editor');
+    me.innerHTML = 'discard';
+    me.onclick = discard_edit;
+}
+function discard_edit() {
+    document.getElementById('user-detail').style.display = '';
+    document.getElementById('edit-detail').style.display = 'none';
+
+    var me = document.getElementById('editor');
+    me.innerHTML = 'edit';
+    me.onclick = start_edit;
+}
+</script>
 
 <div class="wrapper">
 
@@ -83,8 +107,13 @@ $frame_req = $user->framework_requirement();
 
     <h2>welcome back, <?=$user->name?>!</h2>
 
-    <h3>about me:</h3>
-    <p><i><?=$user->more?></i></p>
+    <h3>about me: <button id="editor" onclick="start_edit()">edit</button></h3>
+    <p id="user-detail"><?=$user->more?></p>
+
+    <form id="edit-detail" method="post" style="display: none">
+      <input name="detail" value="<?=$user->more?>" />
+      <input type="submit" />
+    </form>
 
     <hr />
 
@@ -102,7 +131,7 @@ $frame_req = $user->framework_requirement();
 
   <div class="owner">
     <hr />
-    <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/3.0/80x15.png" /></a>
+    <a rel="license"href="http://creativecommons.org/licenses/by/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/3.0/80x15.png" /></a>
     <span>skill tree by neizod 2013</span>
   </div>
 </div>
@@ -141,7 +170,6 @@ $frame_req = $user->framework_requirement();
         <li>
         <? $title_disabled = array_key_exists($i, $lang_depend) ?
                 "title=\"require by: {$lang_depend[$i]}\" disabled" : '' ; ?>
-        <li>
           <button name="lid" value="<?=$i?>" <?=$title_disabled?>>x</button>
           <?=$lang?>
         </li>
@@ -182,9 +210,9 @@ $frame_req = $user->framework_requirement();
       <h4>unknown</h4>
       <ul class="no-bullet">
       <? foreach ($user->experimentable() as $i => $lang): ?>
+        <li>
         <? $title_disabled = array_key_exists($i, $frame_req) ?
                 "title=\"require: {$frame_req[$i]}\" disabled" : '' ; ?>
-        <li>
           <button name="fid" value="<?=$i?>" <?=$title_disabled?>>/</button>
           <?=$lang?>
         </li>
