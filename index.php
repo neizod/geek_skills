@@ -56,7 +56,7 @@ $achievements = $user->achievements();
 
 
 <? // 1st column, show user detail. ?>
-<div class="column margin" style="width: 300px;">
+<div class="column margin" style="width: 320px;">
   <a href="."><h1>Skill Tree</h1></a>
 
   <? if (!$user->uid): ?>
@@ -125,75 +125,63 @@ $achievements = $user->achievements();
 </div>
 
 <? // 3nd column, show language and framework ?>
-<div class="column margin" style="position: relative; width: 300px;">
+<div class="column margin" style="position: relative; width: 320px;">
 
-  <h3>languages</h3>
-  <div>
+  <div class="column margin" style="position: relative; border-width: 0;"> 
+    <h3>languages</h3>
     <form method="post">
-      <table width="100%">
-        <tr>
-          <th width="50%">known</th>
-          <th width="50%">unknown</th>
-        </tr>
-        <tr>
-          <td valign="top">
-            <ul class="no-bullet">
-            <? foreach ($user->codable() as $i => $lang): ?>
-              <li>
-                <button name="lid" value="<?=$i?>">x</button>
-                <?=$lang?>
-              </li>
-            <? endforeach; ?>
-            </ul>
-          </td>
-          <td valign="top">
-            <ul class="no-bullet">
-            <? foreach ($user->readable() as $i => $lang): ?>
-              <li>
-                <button name="lid" value="<?=$i?>">/</button>
-                <?=$lang?>
-              </li>
-            <? endforeach; ?>
-            </ul>
-          </td>
-        </tr>
-      </table>
+      <h4>codable</h4>
+
+      <ul class="no-bullet">
+      <? foreach ($user->codable() as $i => $lang): ?>
+        <li>
+          <button name="lid" value="<?=$i?>">x</button>
+          <?=$lang?>
+        </li>
+      <? endforeach; ?>
+      </ul>
+
+      <hr />
+
+      <h4>unknown</h4>
+      <ul class="no-bullet">
+      <? foreach ($user->readable() as $i => $lang): ?>
+        <li>
+          <button name="lid" value="<?=$i?>">/</button>
+          <?=$lang?>
+        </li>
+      <? endforeach; ?>
+      </ul>
+
     </form>
   </div>
 
-  <hr />
-
-  <h3>frameworks</h3>
-  <div>
+  <div class="column margin" style="position: relative; border-width: 0;"> 
+    <h3>frameworks</h3>
     <form method="post">
-      <table width="100%">
-        <tr>
-          <th width="50%">known</th>
-          <th width="50%">unknown</th>
-        </tr>
-        <tr>
-          <td valign="top">
-            <ul class="no-bullet">
-            <? foreach ($user->buildable() as $i => $lang): ?>
-              <li>
-                <button name="fid" value="<?=$i?>">x</button>
-                <?=$lang?>
-              </li>
-            <? endforeach; ?>
-            </ul>
-          </td>
-          <td valign="top">
-            <ul class="no-bullet">
-            <? foreach ($user->experimentable() as $i => $lang): ?>
-              <li>
-                <button name="fid" value="<?=$i?>">/</button>
-                <?=$lang?>
-              </li>
-            <? endforeach; ?>
-            </ul>
-          </td>
-        </tr>
-      </table>
+
+      <h4>buildable</h4>
+      <ul class="no-bullet">
+      <? foreach ($user->buildable() as $i => $lang): ?>
+        <li>
+          <button name="fid" value="<?=$i?>">x</button>
+          <?=$lang?>
+        </li>
+      <? endforeach; ?>
+      </ul>
+
+      <hr />
+
+      <h4>unknown</h4>
+      <ul class="no-bullet">
+      <? foreach ($user->experimentable() as $i => $lang): ?>
+        <li>
+          <button name="fid" value="<?=$i?>">/</button>
+          <?=$lang?>
+        </li>
+      <? endforeach; ?>
+      </ul>
+
     </form>
   </div>
 
