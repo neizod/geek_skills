@@ -134,6 +134,7 @@ $frame_req = $user->framework_requirement();
   <? if (isset ($summary)): ?>
 
   <div class="margin">
+
     <h2>summary</h2>
     <table>
       <tr>
@@ -165,6 +166,43 @@ $frame_req = $user->framework_requirement();
         <td><?=$summary->max_achievements()?></td>
       </tr>
     </table>
+
+    <div style="float: left; display: inline-block; width: 180px;">
+    <h2>top 10 languages</h2>
+    <table>
+      <tr>
+        <th>no.</th>
+        <th>language</th>
+        <th>amount</th>
+      </tr>
+      <? foreach ($summary->top_languages(10) as $i => $lang): ?>
+      <tr>
+        <td><?=$i+1?></td>
+        <td><?=$lang['name']?></td>
+        <td><?=$lang['amount']?></td>
+      </tr>
+      <? endforeach; ?>
+    </table>
+    </div>
+
+    <div style="float: right; display: inline-block; width: 240px;">
+    <h2>top 10 skills</h2>
+    <table>
+      <tr>
+        <th>no.</th>
+        <th>skill</th>
+        <th>amount</th>
+      </tr>
+      <? foreach ($summary->top_skills(10) as $i => $skill): ?>
+      <tr>
+        <td><?=$i+1?></td>
+        <td><?=$skill['name']?></td>
+        <td><?=$skill['amount']?></td>
+      </tr>
+      <? endforeach; ?>
+    </table>
+    </div>
+
   </div>
 
   <? else: ?> 

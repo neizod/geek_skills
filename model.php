@@ -63,6 +63,24 @@ class Summary {
             return $row['average'];
         }
     }
+
+    public function top_skills($nos) {
+        $skills = [];
+        $sql = contents('sql/summary_top_skills.sql', ['{nos}' => $nos]);
+        foreach ($this->db->query($sql) as $row) {
+            $skills[] = $row;
+        }
+        return $skills;
+    }
+
+    public function top_languages($nos) {
+        $languages = [];
+        $sql = contents('sql/summary_top_langs.sql', ['{nos}' => $nos]);
+        foreach ($this->db->query($sql) as $row) {
+            $languages[] = $row;
+        }
+        return $languages;
+    }
 }
 
 
