@@ -1,5 +1,6 @@
 <?php define('HIDESOURCE', false);
 
+require 'debug.php';
 require 'database.php';
 require 'model.php';
 
@@ -26,9 +27,23 @@ if (isset ($_POST['reset'])) {
 
 // update a skill
 if (isset ($_POST['sid'])) {
-    $sid = $_POST['sid'];
-    $user->click_skill($sid);
+    $user->click_skill($_POST['sid']);
 }
+
+// update a language
+if (isset ($_POST['lid'])) {
+    $user->click_language($_POST['lid']);
+}
+
+// update a framework
+if (isset ($_POST['fid'])) {
+    $user->click_framework($_POST['fid']);
+}
+
+
+// prepare data for view
+$skillful_list = ['skilled', 'unforgettable'];
+$clickable_list = ['skilled', 'learnable'];
 
 $skill_status = $user->skills_status();
 $achievements = $user->achievements();
@@ -94,8 +109,8 @@ $achievements = $user->achievements();
   <form method="post">
   <? foreach ($skill_status as $i => $skill): ?>
 
-    <? $skillful = in_array($skill['stat'], ['skilled', 'unforgettable']) ? 'skillful' : 'unskillful' ; ?>
-    <? $disabled = in_array($skill['stat'], ['skilled', 'learnable']) ? '' : 'disabled' ; ?>
+    <? $skillful = in_array($skill['stat'], $skillful_list) ? 'skillful' : 'unskillful' ; ?>
+    <? $disabled = in_array($skill['stat'], $clickable_list) ? '' : 'disabled' ; ?>
 
     <? if (file_exists("img/a$i.png")): ?>
       <img class="arrow <?=$skillful?>" id="a<?=$i?>" src="<?="img/a$i.png"?>">
@@ -107,4 +122,79 @@ $achievements = $user->achievements();
 
   <? endforeach; ?>
   </form>
+</div>
+
+<? // 3nd column, show language and framework ?>
+<div class="column margin" style="position: relative; width: 300px;">
+
+  <h3>languages</h3>
+  <div>
+    <form method="post">
+      <table width="100%">
+        <tr>
+          <th width="50%">known</th>
+          <th width="50%">unknown</th>
+        </tr>
+        <tr>
+          <td valign="top">
+            <ul class="no-bullet">
+            <? foreach ($user->codable() as $i => $lang): ?>
+              <li>
+                <button name="lid" value="<?=$i?>">x</button>
+                <?=$lang?>
+              </li>
+            <? endforeach; ?>
+            </ul>
+          </td>
+          <td valign="top">
+            <ul class="no-bullet">
+            <? foreach ($user->readable() as $i => $lang): ?>
+              <li>
+                <button name="lid" value="<?=$i?>">/</button>
+                <?=$lang?>
+              </li>
+            <? endforeach; ?>
+            </ul>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div>
+
+  <hr />
+
+  <h3>frameworks</h3>
+  <div>
+    <form method="post">
+      <table width="100%">
+        <tr>
+          <th width="50%">known</th>
+          <th width="50%">unknown</th>
+        </tr>
+        <tr>
+          <td valign="top">
+            <ul class="no-bullet">
+            <? foreach ($user->buildable() as $i => $lang): ?>
+              <li>
+                <button name="fid" value="<?=$i?>">x</button>
+                <?=$lang?>
+              </li>
+            <? endforeach; ?>
+            </ul>
+          </td>
+          <td valign="top">
+            <ul class="no-bullet">
+            <? foreach ($user->experimentable() as $i => $lang): ?>
+              <li>
+                <button name="fid" value="<?=$i?>">/</button>
+                <?=$lang?>
+              </li>
+            <? endforeach; ?>
+            </ul>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div>
+
 </div>

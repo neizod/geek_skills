@@ -127,6 +127,7 @@ class User {
         return $skills;
     }
 
+
     public function achievements() {
         $achievements = [];
         $sql = contents('sql/user_achievements.sql', ['{uid}' => $this->uid]);
@@ -134,5 +135,89 @@ class User {
             $achievements[] = $row;
         }
         return $achievements;
+    }
+
+
+    public function click_language($lid) {
+        $sql = contents('sql/user_sel_lang.sql', ['{lid}' => $lid,
+                                                  '{uid}' => $this->uid]);
+        foreach ($this->db->query($sql) as $data_exists) {
+            return $this->del_language($lid);
+        }
+        return $this->add_language($lid);
+    }
+
+    public function add_language($lid) {
+        $sql = contents('sql/user_add_lang.sql', ['{lid}' => $lid,
+                                                  '{uid}' => $this->uid]);
+        return $this->db->query($sql);
+    }
+
+    public function del_language($lid) {
+        $sql = contents('sql/user_del_lang.sql', ['{lid}' => $lid,
+                                                  '{uid}' => $this->uid]);
+        return $this->db->query($sql);
+    }
+
+    public function codable() {
+        $languages = [];
+        $sql = contents('sql/user_codable.sql', ['{uid}' => $this->uid]);
+        foreach ($this->db->query($sql) as $row) {
+            $lid = $row['lid'];
+            $languages[$lid] = $row['name'];
+        }
+        return $languages;
+    }
+
+    public function readable() {
+        $languages = [];
+        $sql = contents('sql/user_readable.sql', ['{uid}' => $this->uid]);
+        foreach ($this->db->query($sql) as $row) {
+            $lid = $row['lid'];
+            $languages[$lid] = $row['name'];
+        }
+        return $languages;
+    }
+
+
+    public function click_framework($fid) {
+        $sql = contents('sql/user_sel_frame.sql', ['{fid}' => $fid,
+                                                   '{uid}' => $this->uid]);
+        foreach ($this->db->query($sql) as $data_exists) {
+            return $this->del_framework($fid);
+        }
+        return $this->add_framework($fid);
+    }
+
+    public function add_framework($fid) {
+        $sql = contents('sql/user_add_frame.sql', ['{fid}' => $fid,
+                                                   '{uid}' => $this->uid]);
+        return $this->db->query($sql);
+    }
+
+    public function del_framework($fid) {
+        $sql = contents('sql/user_del_frame.sql', ['{fid}' => $fid,
+                                                   '{uid}' => $this->uid]);
+        return $this->db->query($sql);
+    }
+
+    public function buildable() {
+        $languages = [];
+        $sql = contents('sql/user_buildable.sql', ['{uid}' => $this->uid]);
+        foreach ($this->db->query($sql) as $row) {
+            $fid = $row['fid'];
+            $languages[$fid] = $row['name'];
+        }
+        return $languages;
+    }
+
+    public function experimentable() {
+        $languages = [];
+        $sql = contents('sql/user_experimentable.sql', ['{uid}' => $this->uid]);
+        foreach ($this->db->query($sql) as $row) {
+            $fid = $row['fid'];
+            $languages[$fid] = $row['name'];
+        }
+        return $languages;
     }
 }
