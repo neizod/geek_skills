@@ -1,6 +1,5 @@
 <?php define('HIDESOURCE', false);
 
-require 'debug.php';
 require 'database.php';
 require 'model.php';
 
