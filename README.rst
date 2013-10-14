@@ -36,3 +36,20 @@ Quest           Framework / Project
 .. _graphs: http://en.wikipedia.org/wiki/Graph_(data_structure)
 .. _this post on Quora: http://www.quora.com/Learning-to-Program/If-there-were-skill-trees-for-programming-development-what-would-they-look-like
 .. _Diablo II: http://en.wikipedia.org/wiki/Diablo_II
+
+
+Installation
+============
+
+- Prerequisite: ``PHP 5.4``, ``MySQL 14.14``
+- Download and place the folder into webserver.
+- Load database from ``sql/sample-data.sql`` into mysql (default name ``geek_skills``.
+- Update ``database.php`` to connect your database.
+- Rock!
+
+
+License
+=======
+
+- Codes MIT <http://opensource.org/licenses/MIT>
+- Images CC BY 3.0 <http://creativecommons.org/licenses/by/3.0/deed.en_US>
