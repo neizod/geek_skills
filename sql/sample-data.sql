@@ -55,7 +55,7 @@ INSERT INTO users VALUES
 -- -------------------------------------------------------------
 
 CREATE TABLE skills (
-    sid int(11) NOT NULL AUTO_INCREMENT,
+    sid int(11)      NOT NULL AUTO_INCREMENT,
     name varchar(64) NOT NULL,
     PRIMARY KEY (sid),
     UNIQUE KEY (name)
@@ -77,14 +77,14 @@ INSERT INTO skills VALUES
     (NULL, 'mobile application'),
     (NULL, 'web application'),
     (NULL, 'computer architecture'),
-    (NULL, 'ai'),
+    (NULL, 'artificial intelligence'),
     (NULL, 'algorithm'),
     (NULL, 'compiler');
 
 -- -------------------------------------------------------------
 
 CREATE TABLE languages (
-    lid int(11) NOT NULL AUTO_INCREMENT,
+    lid int(11)      NOT NULL AUTO_INCREMENT,
     name varchar(64) NOT NULL,
     PRIMARY KEY (lid),
     UNIQUE KEY (name)
@@ -111,9 +111,9 @@ INSERT INTO languages VALUES
 -- -------------------------------------------------------------
 
 CREATE TABLE frameworks (
-    fid int(11) NOT NULL AUTO_INCREMENT,
+    fid int(11)      NOT NULL AUTO_INCREMENT,
     name varchar(64) NOT NULL,
-    lid int(11) NOT NULL,
+    lid int(11)      NOT NULL,
     PRIMARY KEY (fid),
     UNIQUE KEY (name),
     FOREIGN KEY (lid) REFERENCES languages (lid)
@@ -133,9 +133,9 @@ INSERT INTO frameworks VALUES
 -- -------------------------------------------------------------
 
 CREATE TABLE achievements (
-    aid int(11) NOT NULL AUTO_INCREMENT,
+    aid int(11)      NOT NULL AUTO_INCREMENT,
     name varchar(64) NOT NULL,
-    description text,
+    description text, -- TODO rename -> more, not null default ''
     PRIMARY KEY (aid),
     UNIQUE KEY (name)
 );
@@ -145,10 +145,11 @@ INSERT INTO achievements VALUES
     (NULL, 'beginner++',             'know 2 languages.'),
     (NULL, 'beginner 101',           'know 5 languages.'),
     (NULL, 'work with a frame',      'know a framework'),
-    (NULL, 'looking through window', 'know 4 framework'),
+    (NULL, 'looking through window', 'know 4 frameworks'),
     (NULL, 'programming with class', 'know oop programming.'),
     (NULL, 'finally functional',     'know functional programming.'),
     (NULL, 'pickaxe and shovel',     'know data mining.'),
+    (NULL, 'three laws of robotics', 'know artificial intelligence.'),
     (NULL, 'spider geek',            'know web application.'),
     (NULL, 'geeks everywhere',       'know mobile application.'),
     (NULL, 'psuedocoder',            'know python.'),
@@ -174,30 +175,30 @@ CREATE TABLE skill_requirement (
     rid int(11) NOT NULL,
     sid int(11) NOT NULL,
     PRIMARY KEY (rid, sid),
-    FOREIGN KEY (rid) REFERENCES skills (sid),
-    FOREIGN KEY (sid) REFERENCES skills (sid)
+    FOREIGN KEY (rid) REFERENCES skills (sid), -- on update / delete cascade
+    FOREIGN KEY (sid) REFERENCES skills (sid)  -- TODO
 );
 
 INSERT INTO skill_requirement VALUES
-    (s('algorithm'),  s('basic')),
-    (s('functional'), s('basic')),
-    (s('logic'),      s('functional')),
-    (s('ai'),         s('logic')),
-    (s('ai'),         s('database')),
-    (s('database'),   s('data structure')),
-    (s('mining'),     s('database')),
-    (s('mining'),     s('regular ex')),
-    (s('oop'),        s('basic')),
-    (s('model'),      s('oop')),
-    (s('model'),      s('database')),
-    (s('mobile'),     s('model')),
-    (s('web'),        s('model')),
-    (s('concurrent'), s('basic')),
-    (s('concurrent'), s('architecture')),
-    (s('system'),     s('concurrent')),
-    (s('security'),   s('system')),
-    (s('compiler'),   s('system')),
-    (s('compiler'),   s('regular ex'));
+    (s('algorithm'),        s('basic')),
+    (s('functional'),       s('basic')),
+    (s('logic'),            s('functional')),
+    (s('artificial intel'), s('logic')),
+    (s('artificial intel'), s('database')),
+    (s('database'),         s('data structure')),
+    (s('mining'),           s('database')),
+    (s('mining'),           s('regular ex')),
+    (s('oop'),              s('basic')),
+    (s('model'),            s('oop')),
+    (s('model'),            s('database')),
+    (s('mobile'),           s('model')),
+    (s('web'),              s('model')),
+    (s('concurrent'),       s('basic')),
+    (s('concurrent'),       s('architecture')),
+    (s('system'),           s('concurrent')),
+    (s('security'),         s('system')),
+    (s('compiler'),         s('system')),
+    (s('compiler'),         s('regular ex'));
 
 -- -------------------------------------------------------------
 
@@ -252,6 +253,8 @@ CREATE TRIGGER add_skill_achievement AFTER INSERT ON user_skill
                 INSERT INTO user_achievement VALUES (NEW.uid, a('functional'));
             WHEN s('mining') THEN
                 INSERT INTO user_achievement VALUES (NEW.uid, a('pickaxe'));
+            WHEN s('artificial intel') THEN
+                INSERT INTO user_achievement VALUES (NEW.uid, a('robotics'));
             WHEN s('mobile') THEN
                 INSERT INTO user_achievement VALUES (NEW.uid, a('everywhere'));
             WHEN s('web') THEN
@@ -272,6 +275,9 @@ CREATE TRIGGER del_skill_achievement AFTER DELETE ON user_skill
                                              AND   uid = OLD.uid;
             WHEN s('mining') THEN
                 DELETE FROM user_achievement WHERE aid = a('pickaxe')
+                                             AND   uid = OLD.uid;
+            WHEN s('artificial intel') THEN
+                DELETE FROM user_achievement WHERE aid = a('robotics')
                                              AND   uid = OLD.uid;
             WHEN s('mobile') THEN
                 DELETE FROM user_achievement WHERE aid = a('everywhere')
@@ -311,7 +317,7 @@ INSERT INTO user_skill VALUES
     (5, s('logic')),
     (5, s('data structure')),
     (5, s('database')),
-    (5, s('ai')),
+    (5, s('artificial intel')),
     (6, s('basic')),
     (6, s('oop')),
     (6, s('data structure')),
@@ -331,7 +337,7 @@ INSERT INTO user_skill VALUES
     (8, s('database')),
     (8, s('regular ex')),
     (8, s('mining')),
-    (8, s('ai')),
+    (8, s('artificial intel')),
     (8, s('system')),
     (8, s('security'));
 
