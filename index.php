@@ -58,6 +58,8 @@ $frame_req = $user->framework_requirement();
 <link rel="stylesheet" href="style.css" />
 
 
+<div class="wrapper">
+
 <? // 1st column, show user detail. ?>
 <div class="column margin" style="width: 320px;">
   <a href="."><h1>Skill Tree</h1></a>
@@ -84,6 +86,8 @@ $frame_req = $user->framework_requirement();
     <h3>about me:</h3>
     <p><i><?=$user->more?></i></p>
 
+    <hr />
+
     <h3>achievements</h3>
     <ul class="no-bullet">
     <? foreach ($achievements as $achv): ?>
@@ -96,14 +100,16 @@ $frame_req = $user->framework_requirement();
 
   <? endif; ?>
 
-  <hr />
-
-  <p id="skill-more">((text area for display extra info))</p>
+  <div class="owner">
+    <hr />
+    <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/3.0/80x15.png" /></a>
+    <span>skill tree by neizod 2013</span>
+  </div>
 </div>
 
 
 <? // 2nd column, show skill tree. ?>
-<div class="column" style="position: relative; width: 455px;">
+<div class="column" style="width: 455px;">
   <form method="post">
   <? foreach ($skill_status as $i => $skill): ?>
 
@@ -121,7 +127,6 @@ $frame_req = $user->framework_requirement();
   <? endforeach; ?>
   </form>
 </div>
-
 
 <? // 3nd column, show language and framework ?>
 <div class="column margin" style="position: relative; width: 320px;">
@@ -188,5 +193,7 @@ $frame_req = $user->framework_requirement();
 
     </form>
   </div>
+
+</div>
 
 </div>
