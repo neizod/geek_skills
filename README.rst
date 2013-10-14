@@ -1,6 +1,6 @@
-=====================
-Programmer Skill Tree
-=====================
+===============
+Geek Skill Tree
+===============
 
 Programmer Skill Tree is, like `skill tree`_ in our favorite RPG game, `graphs`_ of skills that relate to programming.
 
@@ -41,8 +41,8 @@ Quest           Framework / Project
 Installation
 ============
 
-- Prerequisite: ``PHP 5.4``, ``MySQL 14.14``
-- Download and place the folder into webserver.
+- Prerequisite: ``PHP 5.4``, ``MySQL 5.5``, screen size 1254px x 626px (PC, tablet).
+- Download and place the folder onto webserver.
 - Load database from ``sql/sample-data.sql`` into mysql (default name ``geek_skills``.
 - Update ``database.php`` to connect your database.
 - Rock!

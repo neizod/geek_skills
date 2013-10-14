@@ -111,7 +111,7 @@ $frame_req = $user->framework_requirement();
     <h3>achievements</h3>
     <ul class="no-bullet">
     <? foreach ($achievements as $achv): ?>
-      <li title="<?=$achv['description']?>">
+      <li title="<?=$achv['more']?>">
         <img src="img/etc/star.png" style="width: 20px; height: 20px;" />
         <?=$achv['name']?>
       </li>

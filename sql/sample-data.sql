@@ -55,7 +55,7 @@ INSERT INTO users VALUES
 -- -------------------------------------------------------------
 
 CREATE TABLE skills (
-    sid int(11)      NOT NULL AUTO_INCREMENT,
+    sid  int(11)     NOT NULL AUTO_INCREMENT,
     name varchar(64) NOT NULL,
     PRIMARY KEY (sid),
     UNIQUE KEY (name)
@@ -84,7 +84,7 @@ INSERT INTO skills VALUES
 -- -------------------------------------------------------------
 
 CREATE TABLE languages (
-    lid int(11)      NOT NULL AUTO_INCREMENT,
+    lid  int(11)     NOT NULL AUTO_INCREMENT,
     name varchar(64) NOT NULL,
     PRIMARY KEY (lid),
     UNIQUE KEY (name)
@@ -111,9 +111,9 @@ INSERT INTO languages VALUES
 -- -------------------------------------------------------------
 
 CREATE TABLE frameworks (
-    fid int(11)      NOT NULL AUTO_INCREMENT,
+    fid  int(11)     NOT NULL AUTO_INCREMENT,
     name varchar(64) NOT NULL,
-    lid int(11)      NOT NULL,
+    lid  int(11)     NOT NULL,
     PRIMARY KEY (fid),
     UNIQUE KEY (name),
     FOREIGN KEY (lid) REFERENCES languages (lid)
@@ -133,9 +133,9 @@ INSERT INTO frameworks VALUES
 -- -------------------------------------------------------------
 
 CREATE TABLE achievements (
-    aid int(11)      NOT NULL AUTO_INCREMENT,
+    aid  int(11)     NOT NULL AUTO_INCREMENT,
     name varchar(64) NOT NULL,
-    description text, -- TODO rename -> more, not null default ''
+    more text        NOT NULL DEFAULT '',
     PRIMARY KEY (aid),
     UNIQUE KEY (name)
 );
