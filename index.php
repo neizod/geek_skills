@@ -48,6 +48,9 @@ $clickable_list = ['skilled', 'learnable'];
 $skill_status = $user->skills_status();
 $achievements = $user->achievements();
 
+$lang_depend = $user->language_dependencies();
+$frame_req = $user->framework_requirement();
+
 ?>
 
 
@@ -135,7 +138,10 @@ $achievements = $user->achievements();
       <ul class="no-bullet">
       <? foreach ($user->codable() as $i => $lang): ?>
         <li>
-          <button name="lid" value="<?=$i?>">x</button>
+        <? $disabled = array_key_exists($i, $lang_depend) ? 'disabled' : '' ; ?>
+        <? $title = array_key_exists($i, $lang_depend) ? "title=\"require by: {$lang_depend[$i]}\"" : '' ; ?>
+        <li>
+          <button name="lid" value="<?=$i?>" <?=$title?> <?=$disabled?>>x</button>
           <?=$lang?>
         </li>
       <? endforeach; ?>
@@ -175,8 +181,10 @@ $achievements = $user->achievements();
       <h4>unknown</h4>
       <ul class="no-bullet">
       <? foreach ($user->experimentable() as $i => $lang): ?>
+        <? $disabled = array_key_exists($i, $frame_req) ? 'disabled' : '' ; ?>
+        <? $title = array_key_exists($i, $frame_req) ? "title=\"require: {$frame_req[$i]}\"" : '' ; ?>
         <li>
-          <button name="fid" value="<?=$i?>">/</button>
+          <button name="fid" value="<?=$i?>" <?=$title?> <?=$disabled?>>/</button>
           <?=$lang?>
         </li>
       <? endforeach; ?>

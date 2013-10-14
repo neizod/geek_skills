@@ -179,6 +179,16 @@ class User {
         return $languages;
     }
 
+    public function language_dependencies() {
+        $languages = [];
+        $sql = contents('sql/user_lang_depend.sql', ['{uid}' => $this->uid]);
+        foreach ($this->db->query($sql) as $row) {
+            $lid = $row['lid'];
+            $languages[$lid] = $row['name'];
+        }
+        return $languages;
+    }
+
 
     public function click_framework($fid) {
         $sql = contents('sql/user_sel_frame.sql', ['{fid}' => $fid,
@@ -219,5 +229,15 @@ class User {
             $languages[$fid] = $row['name'];
         }
         return $languages;
+    }
+
+    public function framework_requirement() {
+        $framworks = [];
+        $sql = contents('sql/user_frame_require.sql', ['{uid}' => $this->uid]);
+        foreach ($this->db->query($sql) as $row) {
+            $fid = $row['fid'];
+            $framworks[$fid] = $row['name'];
+        }
+        return $framworks;
     }
 }
