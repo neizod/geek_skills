@@ -76,7 +76,7 @@ class User {
 
     public function reset_all() {
         $sql = contents('sql/user_reset_all.sql', ['{uid}' => $this->uid]);
-        return $this->db->query($sql);
+        return $this->db->multi_query($sql);
     }
 
     public function skilled() {

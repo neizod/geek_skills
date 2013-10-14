@@ -18,8 +18,8 @@ if (isset ($_GET['uid'])) {
     $user = new User(0);
 }
 
-// reset user skills.
-if (isset ($_POST['reset'])) {
+// reset user skills, languages, and frameworks.
+if (isset ($_GET['reset'])) {
     $user->reset_all();
     header("Location: .?uid={$user->uid}", true, 303);
     exit;
@@ -94,11 +94,6 @@ $frame_req = $user->framework_requirement();
     <? endforeach; ?>
     </ul>
 
-    <? // remove this part if neccessary ?>
-    <form method="post">
-      <button name="reset">reset all skill!</button>
-    </form>
-
   <? endif; ?>
 
   <hr />
@@ -127,6 +122,7 @@ $frame_req = $user->framework_requirement();
   </form>
 </div>
 
+
 <? // 3nd column, show language and framework ?>
 <div class="column margin" style="position: relative; width: 320px;">
 
@@ -138,10 +134,10 @@ $frame_req = $user->framework_requirement();
       <ul class="no-bullet">
       <? foreach ($user->codable() as $i => $lang): ?>
         <li>
-        <? $disabled = array_key_exists($i, $lang_depend) ? 'disabled' : '' ; ?>
-        <? $title = array_key_exists($i, $lang_depend) ? "title=\"require by: {$lang_depend[$i]}\"" : '' ; ?>
+        <? $title_disabled = array_key_exists($i, $lang_depend) ?
+                "title=\"require by: {$lang_depend[$i]}\" disabled" : '' ; ?>
         <li>
-          <button name="lid" value="<?=$i?>" <?=$title?> <?=$disabled?>>x</button>
+          <button name="lid" value="<?=$i?>" <?=$title_disabled?>>x</button>
           <?=$lang?>
         </li>
       <? endforeach; ?>
@@ -181,10 +177,10 @@ $frame_req = $user->framework_requirement();
       <h4>unknown</h4>
       <ul class="no-bullet">
       <? foreach ($user->experimentable() as $i => $lang): ?>
-        <? $disabled = array_key_exists($i, $frame_req) ? 'disabled' : '' ; ?>
-        <? $title = array_key_exists($i, $frame_req) ? "title=\"require: {$frame_req[$i]}\"" : '' ; ?>
+        <? $title_disabled = array_key_exists($i, $frame_req) ?
+                "title=\"require: {$frame_req[$i]}\" disabled" : '' ; ?>
         <li>
-          <button name="fid" value="<?=$i?>" <?=$title?> <?=$disabled?>>/</button>
+          <button name="fid" value="<?=$i?>" <?=$title_disabled?>>/</button>
           <?=$lang?>
         </li>
       <? endforeach; ?>
