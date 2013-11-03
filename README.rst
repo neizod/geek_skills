@@ -41,9 +41,14 @@ Quest           Framework / Project
 Installation
 ============
 
-- Prerequisite: ``PHP 5.4``, ``MySQL 5.5``, screen size 1254px x 626px (PC, tablet).
+- Prerequisite:
+  - ``PHP 5.4``, with ``short_open_tag`` enable.
+  - ``MySQL 5.5``, with stored procedure/function.
+  - screen size 1254px x 626px (PC, tablet).
 - Download and place the folder onto webserver.
-- Load database from ``sql/sample-data.sql`` into mysql (default name ``geek_skills``.
+- Load provided data into database default named ``geek``.
+  - data with example users: ``mysql -u root -p geek < <(cat sql/sample-*)``.
+  - no example users data: ``mysql -u root -p geek < sql/sample-data.sql``.
 - Update ``database.php`` to connect your database.
 - Rock!
 

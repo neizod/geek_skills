@@ -4,6 +4,6 @@ $db = mysqli_connect(
     'localhost',
     'root',
     '',
-    'geek_skills'
+    'geek'
 )
 or exit ('No chance to connect database.');
