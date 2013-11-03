@@ -1,6 +1,23 @@
-DROP DATABASE IF EXISTS geek_skills;
-CREATE DATABASE geek_skills;
-USE geek_skills;
+-- -------------------------------------------------------------
+
+-- PREPARE DATABASE
+-- ================
+-- drop every tables in this order to prevent foriegn key conflict.
+
+-- -------------------------------------------------------------
+
+DROP TABLE IF EXISTS
+    user_achievement,
+    user_framework,
+    user_language,
+    user_skill,
+    framework_requirement,
+    skill_requirement,
+    achievements,
+    frameworks,
+    languages,
+    skills,
+    users;
 
 -- -------------------------------------------------------------
 
@@ -10,15 +27,19 @@ USE geek_skills;
 
 -- -------------------------------------------------------------
 
+DROP FUNCTION IF EXISTS l;
 CREATE FUNCTION l (lang varchar(64)) RETURNS int(11)
     RETURN (SELECT lid FROM languages WHERE name=lang);
 
+DROP FUNCTION IF EXISTS f;
 CREATE FUNCTION f (frame varchar(64)) RETURNS int(11)
     RETURN (SELECT fid FROM frameworks WHERE name=frame);
 
+DROP FUNCTION IF EXISTS s;
 CREATE FUNCTION s (skill varchar(64)) RETURNS int(11)
     RETURN (SELECT sid FROM skills WHERE name LIKE CONCAT('%', skill, '%'));
 
+DROP FUNCTION IF EXISTS a;
 CREATE FUNCTION a (ac varchar(64)) RETURNS int(11)
     RETURN (SELECT aid FROM achievements WHERE name LIKE CONCAT('%', ac, '%'));
 
@@ -26,21 +47,10 @@ CREATE FUNCTION a (ac varchar(64)) RETURNS int(11)
 
 -- DATA TABLES
 -- ===========
--- users --> the only insert+delet data table here
 -- skills
 -- language
 -- frameworks
 -- achievements
-
--- -------------------------------------------------------------
-
-CREATE TABLE users (
-    uid  int(11)     NOT NULL AUTO_INCREMENT,
-    name varchar(64) NOT NULL,
-    more text        NOT NULL DEFAULT '',
-    PRIMARY KEY (uid),
-    UNIQUE KEY (name)
-);
 
 -- -------------------------------------------------------------
 
@@ -154,10 +164,6 @@ INSERT INTO achievements VALUES
 -- ===============
 -- skill_requirement
 -- framework_requirement
--- user_achievement  --> trigger-base
--- user_skill
--- user_language
--- user_framework
 
 -- -------------------------------------------------------------
 
@@ -212,6 +218,26 @@ INSERT INTO framework_requirement VALUES
     (f('phonegap'),    s('mobile')),
     (f('phonegap'),    s('web')),
     (f('corona'),      s('mobile'));
+
+-- -------------------------------------------------------------
+
+-- USERS TABLES
+-- ============
+-- users
+-- user_achievement  --> trigger-base
+-- user_skill
+-- user_language
+-- user_framework
+
+-- -------------------------------------------------------------
+
+CREATE TABLE users (
+    uid  int(11)     NOT NULL AUTO_INCREMENT,
+    name varchar(64) NOT NULL,
+    more text        NOT NULL DEFAULT '',
+    PRIMARY KEY (uid),
+    UNIQUE KEY (name)
+);
 
 -- -------------------------------------------------------------
 
