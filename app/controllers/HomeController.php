@@ -6,4 +6,8 @@ class HomeController extends BaseController {
         return View::make('welcome');
     }
 
+    public function skills() {
+        return View::make('skills');
+    }
+
 }
