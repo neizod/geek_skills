@@ -25,27 +25,16 @@ class HomeController extends BaseController {
             $gh->requestAccessToken($code);
             $result = json_decode($gh->request('user'), true);
 
-            $user = User::where('gh_id', $result['id'])->first();
-            if (!empty($user)) {
-                $uid = $user->id;
-            } else {
-                $uid = $this->create_user($result);
-            }
-            Session::set('uid', $uid);
+            $user = User::firstOrCreate(array('gh_id' => $result['id']));
+            $user->name = $result['login'];
+            $user->save();
+            Session::set('uid', $user->id);
 
             // redirect somewhere? TODO
         } else {
             $url = $gh->getAuthorizationUri();
             return Response::make()->header('Location', (string) $url);
         }
-    }
-
-    private function create_user($gh_result) {
-        $user = new User;
-        $user->name = $gh_result['login'];
-        $user->gh_id = $gh_result['id'];
-        $user->save();
-        return $user->id;
     }
 
 }
