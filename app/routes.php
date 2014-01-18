@@ -1,5 +1,5 @@
 <?php
 
 Route::get('/', 'HomeController@index');
-Route::get('skills', 'HomeController@skills');
 Route::get('login', 'HomeController@login');
+Route::get('logout', 'HomeController@logout');

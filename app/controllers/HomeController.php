@@ -3,18 +3,24 @@
 class HomeController extends BaseController {
 
     public function index() {
-        return View::make('welcome');
-    }
-
-    public function skills() {
-        return View::make('skills');
+        if (Session::has('uid')) {
+            return View::make('skills');
+        } else {
+            return View::make('welcome');
+        }
     }
 
     public function login() {
-        $uid = Session::get('uid');
-        if (empty($uid)) {
+        if (Session::has('uid')) {
+            return Redirect::to('/');
+        } else {
             return $this->login_github();
         }
+    }
+
+    public function logout() {
+        Session::flush();
+        return Redirect::to('/');
     }
 
     public function login_github() {
@@ -28,9 +34,9 @@ class HomeController extends BaseController {
             $user = User::firstOrCreate(array('gh_id' => $result['id']));
             $user->name = $result['login'];
             $user->save();
-            Session::set('uid', $user->id);
 
-            // redirect somewhere? TODO
+            Session::set('uid', $user->id);
+            return Redirect::to('/');
         } else {
             $url = $gh->getAuthorizationUri();
             return Response::make()->header('Location', (string) $url);
