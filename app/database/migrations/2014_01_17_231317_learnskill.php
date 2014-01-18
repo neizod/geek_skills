@@ -11,6 +11,7 @@ class Learnskill extends Migration {
             $table->integer('sid')->unsigned();
             $table->foreign('uid')->references('id')->on('users');
             $table->foreign('sid')->references('id')->on('skills');
+            $table->unique(array('uid', 'sid'));
             $table->timestamps();
         });
     }

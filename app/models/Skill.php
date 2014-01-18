@@ -2,6 +2,6 @@
 
 class Skill extends Eloquent {
 
-    protected $fillable = array('name');
+    protected $fillable = array('abbr', 'name');
 
 }
