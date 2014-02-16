@@ -2,7 +2,7 @@
 
 class HomeController extends BaseController {
 
-    public function index() {
+    public function getIndex() {
         if (Auth::check()) {
             return View::make('skills');
         } else {
@@ -10,7 +10,7 @@ class HomeController extends BaseController {
         }
     }
 
-    public function login() {
+    public function getLogin() {
         if (Auth::check()) {
             return Redirect::to('/');
         } else {
@@ -18,12 +18,12 @@ class HomeController extends BaseController {
         }
     }
 
-    public function logout() {
+    public function getLogout() {
         Auth::logout();
         return Redirect::to('/');
     }
 
-    public function login_github() {
+    private function login_github() {
         $code = Input::get('code');
         $gh = OAuth::consumer('GitHub');
 
