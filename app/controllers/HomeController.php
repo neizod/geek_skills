@@ -3,7 +3,7 @@
 class HomeController extends BaseController {
 
     public function index() {
-        if (Session::has('uid')) {
+        if (Auth::check()) {
             return View::make('skills');
         } else {
             return View::make('welcome');
@@ -11,7 +11,7 @@ class HomeController extends BaseController {
     }
 
     public function login() {
-        if (Session::has('uid')) {
+        if (Auth::check()) {
             return Redirect::to('/');
         } else {
             return $this->login_github();
@@ -19,7 +19,7 @@ class HomeController extends BaseController {
     }
 
     public function logout() {
-        Session::flush();
+        Auth::logout();
         return Redirect::to('/');
     }
 
@@ -35,7 +35,7 @@ class HomeController extends BaseController {
             $user->name = $result['login'];
             $user->save();
 
-            Session::set('uid', $user->id);
+            Auth::login($user);
             return Redirect::to('/');
         } else {
             $url = $gh->getAuthorizationUri();
