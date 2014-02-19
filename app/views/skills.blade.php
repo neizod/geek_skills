@@ -10,12 +10,19 @@
     button[name='sid'] {
       position: absolute;
       display: inline-block;
-      padding: 0px;
-      border:  0px;
       margin:  0px;
-      border-style: solid;
-      border-width: thin;
-      border-color: #09f;
+      padding: 0px;
+      width:  80px;
+      height: 80px;
+      border: solid thin #09f;
+    }
+    button[disabled] {
+      border-color: #000;
+    }
+    button img.gray {
+      -webkit-filter: grayscale(100%);
+         -moz-filter: grayscale(100%);
+              filter: grayscale(100%);
     }
     button[value='1']  { top:   0px; left: 125px; }
     button[value='2']  { top: 125px; left: 250px; }
@@ -46,11 +53,14 @@
 @section('content')
 
   <div class="container">
-    @for ($i=18; $i; $i--)
-    <button name="sid" value="{{$i}}">
-      {{ HTML::image("public/img/s$i.jpg") }}
+    <form method="post">
+    @foreach ($tree as $index => $node)
+    <button name="sid" value="{{$index}}" @if (!$node & 0b01) disabled @endif>
+      {{ HTML::image( "public/img/s{$index}.jpg", null,
+                      array('class' => $node & 0b10 ? 'color' : 'gray')) }}
     </button>
-    @endfor
+    @endforeach
+    </form>
   </div>
 
 @stop

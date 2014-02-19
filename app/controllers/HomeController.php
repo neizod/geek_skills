@@ -4,10 +4,24 @@ class HomeController extends BaseController {
 
     public function getIndex() {
         if (Auth::check()) {
-            return View::make('skills');
+            return View::make('skills', array('tree' => Auth::user()->tree()));
         } else {
             return View::make('welcome');
         }
+    }
+
+    public function postIndex() {
+        if (Auth::check()) {
+            $uid = Auth::user()->id;
+            $sid = Input::get('sid');
+            if (empty(Learning::whereUid($uid)->whereSid($sid)->first())) {
+                Learning::create(array('uid' => $uid, 'sid' => $sid));
+            } else {
+                Learning::whereUid($uid)->whereSid($sid)->delete();
+            }
+            return Redirect::to('/');
+        }
+        return App::abort(401, 'unauth');
     }
 
     public function getLogin() {
