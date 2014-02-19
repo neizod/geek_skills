@@ -8,4 +8,8 @@ class Skill extends Eloquent {
         return $this->belongsToMany('Skill', 'prerequisites', 'rid', 'sid');
     }
 
+    public function foreruns() {
+        return $this->belongsToMany('Skill', 'prerequisites', 'sid', 'rid');
+    }
+
 }
